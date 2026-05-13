@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>AlexNomads Online Curriculum — Product & Growth Operator</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; }
+    .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
+    
+    /* Navigation */
+    nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #e5e5e5; }
+    nav .container { display: flex; justify-content: space-between; align-items: center; height: 64px; }
+    nav a { text-decoration: none; color: #333; font-weight: 500; padding: 0.75rem; transition: color 0.2s; }
+    nav a:hover { color: #1a73e8; }
+    
+    /* Hero Section */
+    .hero { background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); padding: 6rem 2rem 4rem; border-bottom: 1px solid #e5e5e5; }
+    .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.02em; }
+    .hero p { font-size: 1.4rem; color: #666; max-width: 680px; }
+    
+    /* Era Sections */
+    section { padding: 4rem 0; border-top: 1px solid #e5e5e5; }
+    h2 { font-size: 2.5rem; margin-bottom: 2rem; letter-spacing: -0.01em; }
+    .era-title { color: #1a73e8; font-weight: 600; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    
+    /* Cards */
+    .card-grid { display: grid; gap: 2rem; }
+    .card { background: #f9f9f9; padding: 2rem; border-radius: 8px; border: 1px solid #e5e5e5; }
+    .card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
+    .card p { color: #555; font-size: 1.05rem; margin-bottom: 1rem; }
+    .tag { display: inline-block; padding: 0.3rem 0.8rem; background: #e8f0fe; color: #1a73e8; font-size: 0.85rem; font-weight: 500; border-radius: 999px; margin-right: 0.5rem; }
+    
+    /* Pricing */
+    .pricing-grid { display: grid; gap: 2rem; }
+    .pricing-card { background: white; padding: 2.5rem; border-radius: 12px; border: 2px solid #e5e5e5; transition: all 0.3s; text-align: center; }
+    .pricing-card:hover { border-color: #1a73e8; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+    .price { font-size: 3rem; font-weight: 700; margin: 1rem 0; }
+    .price span { font-size: 1.5rem; color: #666; font-weight: 400; }
+    .btn { display: inline-block; background: #1a73e8; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; transition: all 0.2s; }
+    .btn:hover { background: #1557b0; transform: translateY(-2px); }
+    
+    /* Method Steps */
+    .steps { display: grid; gap: 2rem; }
+    .step { position: relative; padding-left: 2rem; }
+    .step::before { content: ''; position: absolute; left: 0.25rem; top: 0; bottom: 0; width: 3px; background: #1a73e8; border-radius: 2px; }
+    .step h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
+    
+    /* Skills List */
+    .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-left: 0; list-style: none; }
+    .skills-list li { background: #f9f9f9; padding: 0.75rem 1rem; border-radius: 6px; font-size: 1rem; color: #444; border: 1px solid #e5e5e5; }
+    
+    /* Timeline */
+    .timeline { position: relative; max-width: 800px; margin: 3rem auto; padding-left: 2rem; }
+    .timeline::before { content: ''; position: absolute; left: 0.6rem; top: 0; bottom: 0; width: 2px; background: #e5e5e5; }
+    .timeline-item { position: relative; padding-left: 2rem; margin-bottom: 3rem; }
+    .timeline-item::after { content: ''; position: absolute; left: 0.6rem; top: 0; width: 1rem; height: 1rem; background: #1a73e8; border-radius: 50%; }
+    .timeline-date { font-size: 0.95rem; color: #666; margin-bottom: 0.5rem; }
+    .timeline-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; }
+    
+    /* Stats */
+    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
+    .stat { text-align: center; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; }
+    .stat-number { font-size: 2.5rem; font-weight: 700; color: #1a73e8; }
+    .stat-label { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
+    
+    /* Footer */
+    footer { background: #1a1a1a; color: #fff; padding: 4rem 2rem; margin-top: 4rem; }
+    footer h3 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.01em; }
+    footer a { color: #8ab4f8; text-decoration: none; }
+    
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.5rem; }
+      .hero p { font-size: 1.1rem; }
+      section { padding: 3rem 1rem; }
+      .pricing-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav>
+    <div class="container">
+      <a href="#home">Home</a>
+      <a href="#industrial">Industrial Era</a>
+      <a href="#digital">Digital Era</a>
+      <a href="#ai-era">AI Era</a>
+      <a href="#method">Method</a>
+      <a href="#pricing">Curriculum</a>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section id="home" class="hero">
+    <div class="container">
+      <h1>AlexNomads<br>Online Curriculum</h1>
+      <p>Product & Growth Operator specializing in Web3, AI Agents, and Startup Building — From early-stage strategy to GTM execution.</p>
+    </div>
+  </section>
+
+  <!-- Industrial Era -->
+  <section id="industrial" class="container">
+    <h2><span class="era-title">The Industrial Era</span>Execution & Domain Mastery</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Gaming Community Growth</h3>
+        <p>Reached <strong>$200k in sales</strong> selling 224+ NFT LANDs through affiliates and KOLs. Built partnerships with exchanges & gaming schools. Educated thousands via IRL meetups and National TV podcasts.</p>
+        <div class="skills-list">
+          <span class="tag">Gaming</span>
+          <span class="tag">Community</span>
+          <span class="tag">NFTs</span>
+          <span class="tag">Events</span>
+        </div>
+      </div>
+      
+      <div class="card">
+        <h3>Series B Marketing Execution</h3>
+        <p>Built 30+ partnerships (Chainlink, DappRadar), hired & trained marketing team, led rebrand following $25M Series B, launched Matera protocol, and joined 100+ conferences increasing reach 15%.</p>
+        <div class="skills-list">
+          <span class="tag">Series B</span>
+          <span class="tag">Team Building</span>
+          <span class="tag">Partnerships</span>
+          <span class="tag">Branding</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>BlueStacks + Game.tv Scale</h3>
+        <p>Generated 100k eSports participants, produced 1,300+ videos reaching 2.4M impressions, organized LIVE events (300+ attendees), grew affiliate traffic 271%.</p>
+        <div class="skills-list">
+          <span class="tag">eSports</span>
+          <span class="tag">Content</span>
+          <span class="tag">Virality</span>
+          <span class="tag">Affiliates</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>GenLayer Video Pipeline</h3>
+        <p>LLM-assisted script generation, editorial workflows, automated scheduler for $7.5M AI blockchain company. One video crossed half a million views.</p>
+        <div class="skills-list">
+          <span class="tag">AI</span>
+          <span class="tag">Content Ops</span>
+          <span class="tag">Virality</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Qubit Wallet — GTM From Scratch</h3>
+        <p>Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships (Polygon, Arbitrum, Optimism, Safe).</p>
+        <div class="skills-list">
+          <span class="tag">Web3</span>
+          <span class="tag">GTM</span>
+          <span class="tag">Brand</span>
+          <span class="tag">Community</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">$200k+</div>
+        <div class="stat-label">NFT Sales Generated</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">54%</div>
+        <div class="stat-label">Community Growth</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">2.4M+</div>
+        <div class="stat-label">Video Views</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">$25M</div>
+        <div class="stat-label">Series B Raised</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Digital Era -->
+  <section id="digital" class="container">
+    <h2><span class="era-title">The Digital Era</span>Software & Platform Building</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Rose of Jericho — AI Wellness App</h3>
+        <p>Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Polygon ecosystem grant and Soonami hackathon to fund development.</p>
+        <div class="skills-list">
+          <span class="tag">AI</span>
+          <span class="tag">Web3</span>
+          <span class="tag">Product</span>
+          <span class="tag">MVP</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Risk Assessment Framework</h3>
+        <p>Developed systematic approach to evaluating career transitions in the AI era. Built diagnostic tools for identifying vulnerability and opportunity.</p>
+        <div class="skills-list">
+          <span class="tag">Analytics</span>
+          <span class="tag">Strategy</span>
+          <span class="tag">Tools</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Agent Setup & Architecture</h3>
+        <p>Designed autonomous agent systems for marketing workflows, community management, and content creation. Implemented orchestration patterns.</p>
+        <div class="skills-list">
+          <span class="tag">Agents</span>
+          <span class="tag">Automation</span>
+          <span class="tag">Systems</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Data Analytics Stack</h3>
+        <p>Built analytics infrastructure for tracking community health, conversion funnels, and content performance across platforms.</p>
+        <div class="skills-list">
+          <span class="tag">Analytics</span>
+          <span class="tag">Data</span>
+          <span class="tag">Metrics</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Influencer Marketing Systems</h3>
+        <p>Developed framework for identifying, onboarding, and managing creator networks. Built incentive models for sustainable partnerships.</p>
+        <div class="skills-list">
+          <span class="tag">Influencers</span>
+          <span class="tag">Networks</span>
+          <span class="tag">Growth</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Prediction Markets Integration</h3>
+        <p>Leveraged betting mechanics and prediction markets for incentive alignment, community engagement, and market-making strategies.</p>
+        <div class="skills-list">
+          <span class="tag">Betting</span>
+          <span class="tag">Markets</span>
+          <span class="tag">Incentives</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="stats-grid">
+      <div class="stat">
+        <div class="stat-number">8.4%</div>
+        <div class="stat-label">Engagement Rate</div>
+      </div>
+      <div class="stat">
+        <div class="stat-number">54%</div>
+        <div class="stat-label">Community Growth</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Era -->
+  <section id="ai-era" class="container">
+    <h2><span class="era-title">The AI Era</span>Orchestration & Autonomy</h2>
+    <p style="font-size: 1.2rem; color: #555; margin-bottom: 2rem;">
+      The skills that got you here won't get you there. I help mid-career professionals and operators leverage AI as force multipliers — not competitors.
+    </p>
+
+    <div class="steps">
+      <div class="step">
+        <h3>01. Audit Current Position</h3>
+        <p>We diagnose your actual situation: skill-to-market matching, role vulnerability analysis, and immediate action items. No vague frameworks — real data.</p>
+      </div>
+
+      <div class="step">
+        <h3>02. Map AI Leverage Points</h3>
+        <p>Identify where AI can multiply your work. Not every task needs automation — but the right ones can free up massive capacity for high-leverage thinking.</p>
+      </div>
+
+      <div class="step">
+        <h3>03. Build Your System</h3>
+        <p>Construct a working prototype that demonstrates your new approach. Clarity comes from building, not planning decks.</p>
+      </div>
+
+      <div class="step">
+        <h3>04. Iterate & Scale</h3>
+        <p>Measure results, refine approaches, and expand. Treat marketing and career strategy like engineering problems — testable hypotheses, measurable outputs.</p>
+      </div>
+    </div>
+
+    <div class="pricing-card" style="margin-top: 2rem; text-align: left;">
+      <h3>The Method</h3>
+      <p style="font-size: 1.1rem; margin-bottom: 1rem;">A diagnostic built on real systems. No generic frameworks — a structured process built around your role, industry, and what's actually changing in your field.</p>
+      <ul style="text-align: left; padding-left: 1.5rem; font-size: 1.05rem;">
+        <li><strong>Current role vulnerability analysis</strong></li>
+        <li><strong>Skill-to-market matching</strong></li>
+        <li><strong>Immediate action items</strong></li>
+        <li><strong>Narrative development</strong></li>
+        <li><strong>Capability roadmap</strong></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Method -->
+  <section id="method" class="container">
+    <h2>The Philosophy</h2>
+    <div class="card-grid">
+      <div class="card">
+        <h3>Treat Marketing Like Engineering</h3>
+        <p>Inputs, levers, outputs. Testable hypotheses. Ship fast, measure, iterate. No vibes-based strategy.</p>
+      </div>
+
+      <div class="card">
+        <h3>Small, Testable Builds</h3>
+        <p>Clarity comes from working prototypes, not planning decks. Same for career transitions — we test, don't theorise.</p>
+      </div>
+
+      <div class="card">
+        <h3>Orchestrate AI, Don't Compete</h3>
+        <p>This is the AI-era mindset shift: orchestrate AI, don't compete with it. I'll show you exactly how to use agents as force multipliers.</p>
+      </div>
+
+      <div class="card">
+        <h3>Thrive in Ambiguity</h3>
+        <p>Mid-career transitions are inherently ambiguous. I'm built for wide scope without a large team — I'll coach you to do the same.</p>
+      </div>
+
+      <div class="card">
+        <h3>Real Network, Active Ecosystems</h3>
+        <p>Polygon grants, Series B launches, GenLayer. When relevant, doors open because I know people and ecosystems.</p>
+      </div>
+
+      <div class="card">
+        <h3>Move With Data</h3>
+        <p>I don't give you vague advice like generic chatbots. I give you real metrics: "Here's your engagement rate. Here's the lever to pull. Here's what to measure next."</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section id="pricing" class="container">
+    <h2>Curriculum & Coaching</h2>
+    <div class="pricing-grid">
+      <div class="pricing-card">
+        <h3>Clarity Call</h3>
+        <div class="price">€29<span>/once</span></div>
+        <p style="margin-bottom: 1rem;">30-minute diagnostic session</p>
+        <ul style="text-align: left; padding-left: 1.5rem; margin-bottom: 1.5rem; font-size: 0.95rem;">
+          <li>AI-era readiness assessment</li>
+          <li>Role risk & opportunity mapping</li>
+          <li>Custom pivot direction</li>
+          <li>Clear next steps regardless of continuing</li>
+        </ul>
+        <a href="mailto:aicoachalex@gmail.com?subject=Diagnostic Call — AlexNomads" class="btn">Book Diagnostic →</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Monthly Partnership</h3>
+        <div class="price">€300<span>/month</span></div>
+        <p style="margin-bottom: 1rem;">1-month commitment</p>
+        <ul style="text-align: left; padding-left: 1.5rem; margin-bottom: 1.5rem; font-size: 0.95rem;">
+          <li>Weekly 1:1 strategy sessions</li>
+          <li>AI tools & frameworks between sessions</li>
+          <li>LinkedIn positioning & narrative work</li>
+          <li>Career Risk Assessment framework</li>
+          <li>Async support via Telegram</li>
+        </ul>
+        <a href="mailto:aicoachalex@gmail.com?subject=Monthly Partnership — AlexNomads" class="btn">Start Monthly →</a>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Full Transformation</h3>
+        <div class="price">€900<span>/3 months</span></div>
+        <p style="margin-bottom: 1rem;">Complete curriculum delivery</p>
+        <ul style="text-align: left; padding-left: 1.5rem; margin-bottom: 1.5rem; font-size: 0.95rem;">
+          <li>Everything in Monthly</li>
+          <li>Full narrative development & positioning</li>
+          <li>AI tool stack setup for your role</li>
+          <li>LinkedIn authority content plan</li>
+          <li>Case study of your transformation</li>
+        </ul>
+        <a href="mailto:aicoachalex@gmail.com?subject=3-Month Programme — AlexNomads" class="btn">Apply for 3-Month →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section class="container">
+    <h2>Resources</h2>
+    <div class="card-grid">
+      <div class="card" style="text-align: center;">
+        <a href="#" style="color: #1a73e8; font-size: 1.5rem; font-weight: 600;">Career Risk Assessment →</a>
+        <p style="margin-top: 0.5rem;">Take the quiz to evaluate your AI-era readiness</p>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <a href="#" style="color: #1a73e8; font-size: 1.5rem; font-weight: 600;">Agent Setup Guide →</a>
+        <p style="margin-top: 0.5rem;">Build your autonomous agent systems</p>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <a href="https://alexnomads.github.io/web3-hiring-report/" style="color: #1a73e8; font-size: 1.5rem; font-weight: 600;">Who I Work With →</a>
+        <p style="margin-top: 0.5rem;">View current hiring report & requirements</p>
+      </div>
+
+      <div class="card" style="text-align: center;">
+        <a href="#" style="color: #1a73e8; font-size: 1.5rem; font-weight: 600;">Blog →</a>
+        <p style="margin-top: 0.5rem;">Articles on AI, Web3, and Growth</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <h3>About AlexNomads</h3>
+      <p style="font-size: 1.1rem; line-height: 1.8; color: #ccc;">
+        I treat career strategy like an engineering problem. I've spent years building products and GTM systems at the edge of where tech was going next — Web3 before it was mainstream, AI agents before most companies had a strategy for them. I didn't learn any of this in a classroom. I learned it by shipping, failing fast, and adapting.
+      </p>
+
+      <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid #333;">
+        <a href="#" style="margin-right: 2rem;">Twitter/X</a>
+        <a href="#" style="margin-right: 2rem;">LinkedIn</a>
+        <a href="#">GitHub</a>
+      </div>
+
+      <p style="margin-top: 1.5rem; font-size: 0.85rem; color: #666;">
+        © 2026 AlexNomads. All rights reserved.
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
