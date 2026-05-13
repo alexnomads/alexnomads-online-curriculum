@@ -65,6 +65,37 @@
     .stat-number { font-size: 2.5rem; font-weight: 700; color: #1a73e8; }
     .stat-label { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
     
+    /* Clickable Cards */
+    .card.clickable { cursor: pointer; transition: all 0.25s ease; position: relative; }
+    .card.clickable:hover { border-color: #1a73e8; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(26,115,232,0.12); }
+    .card.clickable::after { content: 'View Case Study →'; position: absolute; bottom: 1rem; right: 1.5rem; font-size: 0.85rem; color: #1a73e8; font-weight: 600; opacity: 0; transition: opacity 0.25s ease; }
+    .card.clickable:hover::after { opacity: 1; }
+
+    /* Modal Overlay */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
+    .modal-overlay.active { opacity: 1; visibility: visible; }
+    .modal { background: #fff; border-radius: 16px; max-width: 720px; width: 92%; max-height: 85vh; overflow-y: auto; position: relative; transform: translateY(20px) scale(0.97); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); padding: 0; }
+    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+    .modal-close { position: sticky; top: 0; display: flex; justify-content: flex-end; padding: 1rem 1.5rem 0; z-index: 2; background: linear-gradient(to bottom, #fff 60%, transparent); }
+    .modal-close button { background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; color: #333; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
+    .modal-close button:hover { background: #e0e0e0; }
+    .modal-header { padding: 0 2.5rem; margin-bottom: 1.5rem; }
+    .modal-era { display: inline-block; padding: 0.3rem 0.9rem; background: #e8f0fe; color: #1a73e8; font-size: 0.8rem; font-weight: 600; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
+    .modal-header h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
+    .modal-header p.subtitle { font-size: 1.1rem; color: #666; line-height: 1.6; }
+    .modal-body { padding: 0 2.5rem 2.5rem; }
+    .modal-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
+    .modal-metric { text-align: center; padding: 1.2rem 0.5rem; background: #f5f8ff; border-radius: 10px; }
+    .modal-metric .value { font-size: 1.6rem; font-weight: 700; color: #1a73e8; }
+    .modal-metric .label { font-size: 0.78rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; }
+    .modal-section { margin-bottom: 1.5rem; }
+    .modal-section h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a; }
+    .modal-section p, .modal-section li { font-size: 1rem; color: #444; line-height: 1.7; }
+    .modal-section ul { padding-left: 1.3rem; }
+    .modal-section ul li { margin-bottom: 0.4rem; }
+    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e5e5; }
+    .modal-tag { display: inline-block; padding: 0.35rem 0.9rem; background: #f0f0f0; color: #333; font-size: 0.85rem; font-weight: 500; border-radius: 999px; }
+
     /* Footer */
     footer { background: #1a1a1a; color: #fff; padding: 4rem 2rem; margin-top: 4rem; }
     footer h3 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.01em; }
@@ -75,6 +106,10 @@
       .hero p { font-size: 1.1rem; }
       section { padding: 3rem 1rem; }
       .pricing-grid { grid-template-columns: 1fr; }
+      .modal { width: 96%; max-height: 90vh; border-radius: 12px; }
+      .modal-header, .modal-body { padding-left: 1.5rem; padding-right: 1.5rem; }
+      .modal-header h2 { font-size: 1.5rem; }
+      .modal-metrics { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
@@ -104,7 +139,7 @@
   <section id="industrial" class="container">
     <h2><span class="era-title">The Industrial Era</span>Execution & Domain Mastery</h2>
     <div class="card-grid">
-      <div class="card">
+      <div class="card clickable" onclick="openModal('gaming')">
         <h3>Gaming Community Growth</h3>
         <p>Reached <strong>$200k in sales</strong> selling 224+ NFT LANDs through affiliates and KOLs. Built partnerships with exchanges & gaming schools. Educated thousands via IRL meetups and National TV podcasts.</p>
         <div class="skills-list">
@@ -115,7 +150,7 @@
         </div>
       </div>
       
-      <div class="card">
+      <div class="card clickable" onclick="openModal('seriesb')">
         <h3>Series B Marketing Execution</h3>
         <p>Built 30+ partnerships (Chainlink, DappRadar), hired & trained marketing team, led rebrand following $25M Series B, launched Matera protocol, and joined 100+ conferences increasing reach 15%.</p>
         <div class="skills-list">
@@ -126,7 +161,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('bluestacks')">
         <h3>BlueStacks + Game.tv Scale</h3>
         <p>Generated 100k eSports participants, produced 1,300+ videos reaching 2.4M impressions, organized LIVE events (300+ attendees), grew affiliate traffic 271%.</p>
         <div class="skills-list">
@@ -137,7 +172,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('genlayer')">
         <h3>GenLayer Video Pipeline</h3>
         <p>LLM-assisted script generation, editorial workflows, automated scheduler for $7.5M AI blockchain company. One video crossed half a million views.</p>
         <div class="skills-list">
@@ -147,7 +182,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('qubit')">
         <h3>Qubit Wallet — GTM From Scratch</h3>
         <p>Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships (Polygon, Arbitrum, Optimism, Safe).</p>
         <div class="skills-list">
@@ -183,7 +218,7 @@
   <section id="digital" class="container">
     <h2><span class="era-title">The Digital Era</span>Software & Platform Building</h2>
     <div class="card-grid">
-      <div class="card">
+      <div class="card clickable" onclick="openModal('rosejericho')">
         <h3>Rose of Jericho — AI Wellness App</h3>
         <p>Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Polygon ecosystem grant and Soonami hackathon to fund development.</p>
         <div class="skills-list">
@@ -194,7 +229,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('riskassessment')">
         <h3>Risk Assessment Framework</h3>
         <p>Developed systematic approach to evaluating career transitions in the AI era. Built diagnostic tools for identifying vulnerability and opportunity.</p>
         <div class="skills-list">
@@ -204,7 +239,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('agentsetup')">
         <h3>Agent Setup & Architecture</h3>
         <p>Designed autonomous agent systems for marketing workflows, community management, and content creation. Implemented orchestration patterns.</p>
         <div class="skills-list">
@@ -214,7 +249,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('analytics')">
         <h3>Data Analytics Stack</h3>
         <p>Built analytics infrastructure for tracking community health, conversion funnels, and content performance across platforms.</p>
         <div class="skills-list">
@@ -224,7 +259,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('influencer')">
         <h3>Influencer Marketing Systems</h3>
         <p>Developed framework for identifying, onboarding, and managing creator networks. Built incentive models for sustainable partnerships.</p>
         <div class="skills-list">
@@ -234,7 +269,7 @@
         </div>
       </div>
 
-      <div class="card">
+      <div class="card clickable" onclick="openModal('prediction')">
         <h3>Prediction Markets Integration</h3>
         <p>Leveraged betting mechanics and prediction markets for incentive alignment, community engagement, and market-making strategies.</p>
         <div class="skills-list">
@@ -427,6 +462,426 @@
       </p>
     </div>
   </footer>
+
+  <!-- Modal Overlay -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
+    <div class="modal" id="modalContent">
+      <div class="modal-close"><button onclick="closeModal()" aria-label="Close">✕</button></div>
+      <div class="modal-header" id="modalHeader"></div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+
+  <script>
+    const caseStudies = {
+      gaming: {
+        era: 'Industrial Era',
+        title: 'Gaming Community Growth',
+        subtitle: 'Built a Web3 gaming community from zero to $200k+ in NFT LAND sales through affiliate networks, KOL partnerships, and grassroots education across LATAM and Europe.',
+        metrics: [
+          { value: '$200k+', label: 'NFT Sales' },
+          { value: '224+', label: 'LANDs Sold' },
+          { value: '1000s', label: 'Educated' },
+          { value: 'National TV', label: 'Media Reach' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'A Web3 gaming platform needed to sell virtual LANDs in a nascent NFT market where most potential buyers had never interacted with blockchain technology or understood the value proposition of digital real estate.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Recruited and managed a network of affiliate partners and KOLs (Key Opinion Leaders) across gaming and crypto communities',
+              'Built strategic partnerships with cryptocurrency exchanges and gaming schools to reach new audiences',
+              'Organized IRL meetups and educational events to demystify Web3 gaming for mainstream audiences',
+              'Secured National TV podcast appearances to build credibility and reach mass-market viewers',
+              'Created educational content pipeline translating complex blockchain concepts into accessible gaming narratives'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Sold 224+ NFT LANDs generating over $200k in revenue. Educated thousands of potential users through in-person events and media appearances. Established a replicable community-growth playbook for Web3 gaming projects.'
+          }
+        ],
+        tags: ['Gaming', 'Community Building', 'NFTs', 'KOL Management', 'Events', 'Affiliate Marketing', 'Web3 Education']
+      },
+      seriesb: {
+        era: 'Industrial Era',
+        title: 'Series B Marketing Execution',
+        subtitle: 'Led post-Series B marketing transformation: 30+ partnerships, full rebrand, team build-out, and 100+ conference presence for a $25M-funded blockchain protocol.',
+        metrics: [
+          { value: '$25M', label: 'Series B Raised' },
+          { value: '30+', label: 'Partnerships' },
+          { value: '100+', label: 'Conferences' },
+          { value: '15%', label: 'Reach Growth' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Following a $25M Series B raise, the company needed to rapidly scale its marketing operations, establish industry partnerships, and rebrand to match its new positioning — all while launching a new protocol (Matera).'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Negotiated and closed 30+ strategic partnerships including Chainlink, DappRadar, and other top-tier ecosystem players',
+              'Hired, onboarded, and trained a marketing team to handle scaled operations',
+              'Led a complete rebrand to align company identity with post-Series B ambitions',
+              'Orchestrated the launch of the Matera protocol with coordinated go-to-market campaigns',
+              'Attended and represented the company at 100+ industry conferences worldwide'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Increased overall brand reach by 15%. Built a sustainable partnership network that generated ongoing co-marketing opportunities. Successfully launched Matera protocol with strong initial traction. Created a scalable marketing infrastructure for continued growth.'
+          }
+        ],
+        tags: ['Series B', 'Team Building', 'Partnerships', 'Branding', 'Protocol Launch', 'Conference Strategy', 'GTM']
+      },
+      bluestacks: {
+        era: 'Industrial Era',
+        title: 'BlueStacks + Game.tv Scale',
+        subtitle: 'Drove massive scale for mobile gaming platforms through eSports tournaments, viral video content, and affiliate growth — reaching 2.4M+ impressions and 100k participants.',
+        metrics: [
+          { value: '100k', label: 'eSports Participants' },
+          { value: '1,300+', label: 'Videos Produced' },
+          { value: '2.4M+', label: 'Impressions' },
+          { value: '271%', label: 'Affiliate Growth' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'BlueStacks and Game.tv needed to grow their user base in competitive mobile gaming markets, requiring high-volume content production, community events, and scalable acquisition channels.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Designed and executed eSports tournament infrastructure that attracted 100k+ participants',
+              'Built a content production pipeline generating 1,300+ videos across platforms',
+              'Organized LIVE in-person gaming events with 300+ attendees per event',
+              'Developed affiliate marketing systems that drove 271% traffic growth',
+              'Created viral content strategies optimized for gaming audiences across YouTube, Twitch, and social platforms'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Achieved 2.4M+ video impressions across platforms. Grew affiliate traffic by 271%. Built a self-sustaining tournament community of 100k participants. Established repeatable event and content frameworks for ongoing engagement.'
+          }
+        ],
+        tags: ['eSports', 'Content Production', 'Virality', 'Affiliate Marketing', 'LIVE Events', 'Mobile Gaming', 'Community']
+      },
+      genlayer: {
+        era: 'Industrial Era',
+        title: 'GenLayer Video Pipeline',
+        subtitle: 'Built an AI-powered video content pipeline for a $7.5M AI blockchain startup — combining LLM-assisted scripting with automated scheduling to achieve viral reach.',
+        metrics: [
+          { value: '500k+', label: 'Top Video Views' },
+          { value: '$7.5M', label: 'Company Valuation' },
+          { value: 'LLM', label: 'Script Generation' },
+          { value: 'Auto', label: 'Scheduling' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'GenLayer, a $7.5M AI blockchain company, needed a scalable video content strategy that could consistently produce high-quality educational and marketing content without a large production team.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Developed LLM-assisted script generation workflows to accelerate content ideation and writing',
+              'Built editorial review processes ensuring quality control while maintaining high output velocity',
+              'Implemented automated scheduling systems for consistent cross-platform publishing',
+              'Optimized content formats and hooks for maximum algorithmic reach',
+              'Created feedback loops using analytics to continuously improve content performance'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'One video crossed half a million views organically. Built a content engine that produced consistent, high-quality output at scale. Demonstrated that AI-assisted workflows could match or exceed traditional production quality while dramatically reducing cost and time.'
+          }
+        ],
+        tags: ['AI', 'Content Operations', 'LLM Workflows', 'Virality', 'Video Production', 'Automation', 'Blockchain']
+      },
+      qubit: {
+        era: 'Industrial Era',
+        title: 'Qubit Wallet — GTM From Scratch',
+        subtitle: 'Designed and executed a complete go-to-market strategy for a Web3 wallet from zero — building brand identity, community, and securing tier-1 ecosystem partnerships.',
+        metrics: [
+          { value: '500', label: 'Beta Testers' },
+          { value: '8.4%', label: 'Engagement Rate' },
+          { value: '54%', label: 'Community Growth' },
+          { value: '4', label: 'Chain Partners' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Qubit Wallet needed a full go-to-market strategy built from the ground up — no existing brand, no community, and competing in the crowded Web3 wallet space against established players.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Crafted complete brand identity including visual design, messaging, and positioning strategy',
+              'Built community engagement systems achieving an exceptional 8.4% engagement rate',
+              'Recruited and onboarded 500 Beta testers through targeted outreach and referral programs',
+              'Secured strategic partnerships with Polygon, Arbitrum, Optimism, and Safe',
+              'Grew community by 54% through organic content and ecosystem participation'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Achieved 8.4% engagement rate (industry average is ~1-3%). Grew community 54% month-over-month. Secured partnerships with four major blockchain ecosystems. Launched a successful Beta program with 500 active testers providing actionable feedback.'
+          }
+        ],
+        tags: ['Web3', 'Go-To-Market', 'Brand Identity', 'Community', 'Polygon', 'Arbitrum', 'Optimism', 'Safe']
+      },
+      rosejericho: {
+        era: 'Digital Era',
+        title: 'Rose of Jericho — AI Wellness App',
+        subtitle: 'Built an AI wellness MVP from concept to grant-funded product — combining AI personalisation, onchain reward mechanics, and autonomous agent workflows.',
+        metrics: [
+          { value: 'MVP', label: 'Stage' },
+          { value: 'Polygon', label: 'Grant Won' },
+          { value: 'Soonami', label: 'Hackathon Won' },
+          { value: 'N8N', label: 'Agent Stack' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'The wellness space lacked products that combined modern AI personalisation with sustainable engagement mechanics. Existing apps relied on subscriptions and willpower alone — without leveraging emerging technology to drive lasting behavior change.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Designed product architecture combining AI-driven personalisation with onchain reward systems',
+              'Built autonomous agent workflows using N8N for content curation and user engagement',
+              'Applied to and won a Polygon ecosystem grant to validate the Web3 component',
+              'Won the Soonami hackathon, securing additional funding and mentorship',
+              'Developed the MVP with a lean team, iterating rapidly based on early user feedback'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Successfully built a working MVP that demonstrated the viability of AI + Web3 wellness products. Won both a Polygon grant and Soonami hackathon, validating the concept with industry experts. Established a product foundation ready for scaling.'
+          }
+        ],
+        tags: ['AI', 'Web3', 'Product Development', 'MVP', 'N8N', 'Polygon', 'Hackathon', 'Wellness']
+      },
+      riskassessment: {
+        era: 'Digital Era',
+        title: 'Risk Assessment Framework',
+        subtitle: 'Created a systematic diagnostic framework for evaluating career vulnerability in the AI era — turning abstract disruption anxiety into actionable transition plans.',
+        metrics: [
+          { value: 'Diagnostic', label: 'Tool Type' },
+          { value: 'AI Era', label: 'Focus' },
+          { value: 'Systematic', label: 'Approach' },
+          { value: 'Actionable', label: 'Output' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Mid-career professionals face growing uncertainty about how AI will impact their roles, but lack concrete tools to assess their actual vulnerability and identify high-leverage transition paths.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Researched AI automation patterns across industries to identify which skills and roles are most at risk',
+              'Developed a scoring framework that maps current capabilities against future market demand',
+              'Built diagnostic questionnaires that surface hidden vulnerabilities and overlooked strengths',
+              'Created actionable output formats: risk scores, opportunity maps, and prioritized action plans',
+              'Tested and iterated the framework with real career-transition coaching clients'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Produced a reusable framework now central to the AlexNomads coaching methodology. Clients report clarity and reduced anxiety within the first diagnostic session. The tool surfaces non-obvious pivot opportunities that generic career advice misses entirely.'
+          }
+        ],
+        tags: ['Analytics', 'Strategy', 'Career Transitions', 'AI Disruption', 'Diagnostic Tools', 'Coaching']
+      },
+      agentsetup: {
+        era: 'Digital Era',
+        title: 'Agent Setup & Architecture',
+        subtitle: 'Designed and deployed autonomous AI agent systems for marketing automation, community management, and content creation — building the operational backbone for AI-era businesses.',
+        metrics: [
+          { value: 'Multi-Agent', label: 'Architecture' },
+          { value: 'Marketing', label: 'Primary Use' },
+          { value: 'Autonomous', label: 'Operation Mode' },
+          { value: 'Scalable', label: 'Design' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Businesses needed to leverage AI agents for operational tasks but lacked the architecture knowledge to build reliable, autonomous systems that could handle marketing workflows without constant human supervision.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Designed multi-agent orchestration patterns for marketing, community, and content workflows',
+              'Implemented agent systems with appropriate guardrails and human-in-the-loop checkpoints',
+              'Built monitoring and feedback loops to ensure quality and catch edge cases',
+              'Created reusable templates and frameworks for rapid agent deployment',
+              'Documented architecture patterns for knowledge transfer and team adoption'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Delivered production-ready agent systems that reduced manual marketing operations by significant margins. Created an agent architecture playbook now used across multiple client engagements. Demonstrated that autonomous agents can handle nuanced marketing tasks when properly orchestrated.'
+          }
+        ],
+        tags: ['AI Agents', 'Automation', 'Systems Design', 'Marketing Ops', 'Orchestration', 'N8N']
+      },
+      analytics: {
+        era: 'Digital Era',
+        title: 'Data Analytics Stack',
+        subtitle: 'Built end-to-end analytics infrastructure for tracking community health, conversion funnels, and content performance — turning raw data into actionable growth insights.',
+        metrics: [
+          { value: 'End-to-End', label: 'Coverage' },
+          { value: 'Real-time', label: 'Monitoring' },
+          { value: 'Multi-Platform', label: 'Integration' },
+          { value: 'Actionable', label: 'Insights' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Growth teams operated across multiple platforms (Discord, Telegram, Twitter, YouTube) with no unified view of community health or content performance. Decision-making relied on gut feeling rather than data.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Designed data collection pipelines aggregating metrics from Discord, Telegram, Twitter, and content platforms',
+              'Built conversion funnel tracking from initial awareness through community join to active participation',
+              'Created dashboards for real-time monitoring of community health indicators',
+              'Implemented content performance scoring to identify winning formats and topics',
+              'Developed automated reporting workflows for stakeholder updates'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Unified previously siloed data into a single analytics view. Enabled data-driven content decisions that improved engagement rates. Provided leadership with real-time visibility into community growth and health metrics. Reduced reporting overhead through automation.'
+          }
+        ],
+        tags: ['Analytics', 'Data Infrastructure', 'Dashboards', 'Community Metrics', 'Conversion Tracking']
+      },
+      influencer: {
+        era: 'Digital Era',
+        title: 'Influencer Marketing Systems',
+        subtitle: 'Developed a complete framework for identifying, onboarding, and managing creator networks — with incentive models designed for sustainable, long-term partnerships.',
+        metrics: [
+          { value: 'Framework', label: 'Deliverable' },
+          { value: 'Creator', label: 'Network Type' },
+          { value: 'Sustainable', label: 'Partnership Model' },
+          { value: 'Scalable', label: 'Onboarding' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Most influencer marketing in Web3 relied on one-off paid posts with little ROI tracking. Companies needed a systematic approach to build lasting creator relationships that generated sustained value.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Developed scoring criteria for identifying high-impact creators aligned with brand values',
+              'Built streamlined onboarding processes reducing time-to-first-campaign',
+              'Designed incentive models balancing upfront payments with performance-based rewards',
+              'Created management systems for tracking deliverables, engagement, and ROI across creator cohorts',
+              'Implemented feedback loops for continuous relationship optimization'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Established a replicable influencer marketing system adopted across multiple projects. Shifted from transactional influencer relationships to strategic partnerships. Created measurable ROI tracking that justified continued investment in creator networks.'
+          }
+        ],
+        tags: ['Influencer Marketing', 'Creator Networks', 'Growth', 'Partnerships', 'Incentive Design', 'KOL Management']
+      },
+      prediction: {
+        era: 'Digital Era',
+        title: 'Prediction Markets Integration',
+        subtitle: 'Leveraged prediction market mechanics and betting-style incentives for community engagement, market intelligence, and novel user acquisition strategies.',
+        metrics: [
+          { value: 'Novel', label: 'Approach' },
+          { value: 'Betting', label: 'Mechanics' },
+          { value: 'Engagement', label: 'Primary Goal' },
+          { value: 'Market Intel', label: 'Secondary Goal' }
+        ],
+        sections: [
+          {
+            title: 'The Challenge',
+            content: 'Traditional community engagement tactics (airdrops, quests, bounties) were losing effectiveness. Projects needed novel incentive alignment mechanisms that tapped into genuine user interest and participation.'
+          },
+          {
+            title: 'The Approach',
+            list: [
+              'Studied prediction market platforms and betting mechanics to identify applicable engagement patterns',
+              'Designed community challenges using prediction-style incentives that rewarded knowledge and participation',
+              'Built integration strategies connecting prediction market data with marketing intelligence',
+              'Created gamified engagement loops where users\'  predictions drove deeper community involvement',
+              'Developed market-making strategies leveraging community sentiment data'
+            ]
+          },
+          {
+            title: 'The Results',
+            content: 'Introduced a differentiated engagement mechanic that stood out in a crowded Web3 landscape. Generated higher-quality community participation compared to traditional methods. Created a bridge between DeFi mechanics and community growth strategies.'
+          }
+        ],
+        tags: ['Prediction Markets', 'Betting Mechanics', 'Incentive Design', 'Community Engagement', 'DeFi', 'Gamification']
+      }
+    };
+
+    function openModal(id) {
+      const study = caseStudies[id];
+      if (!study) return;
+
+      const header = document.getElementById('modalHeader');
+      const body = document.getElementById('modalBody');
+
+      header.innerHTML = `
+        <span class="modal-era">${study.era}</span>
+        <h2>${study.title}</h2>
+        <p class="subtitle">${study.subtitle}</p>
+      `;
+
+      let metricsHtml = '<div class="modal-metrics">';
+      study.metrics.forEach(m => {
+        metricsHtml += `<div class="modal-metric"><div class="value">${m.value}</div><div class="label">${m.label}</div></div>`;
+      });
+      metricsHtml += '</div>';
+
+      let sectionsHtml = '';
+      study.sections.forEach(s => {
+        sectionsHtml += `<div class="modal-section"><h3>${s.title}</h3>`;
+        if (s.content) sectionsHtml += `<p>${s.content}</p>`;
+        if (s.list) {
+          sectionsHtml += '<ul>';
+          s.list.forEach(item => { sectionsHtml += `<li>${item}</li>`; });
+          sectionsHtml += '</ul>';
+        }
+        sectionsHtml += '</div>';
+      });
+
+      let tagsHtml = '<div class="modal-tags">';
+      study.tags.forEach(t => { tagsHtml += `<span class="modal-tag">${t}</span>`; });
+      tagsHtml += '</div>';
+
+      body.innerHTML = metricsHtml + sectionsHtml + tagsHtml;
+
+      document.getElementById('modalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+
+    function closeModalOutside(event) {
+      if (event.target === document.getElementById('modalOverlay')) closeModal();
+    }
+
+    document.addEventListener('keydown', function(e) {
+      if (e.key === 'Escape') closeModal();
+    });
+  </script>
 
 </body>
 </html>
