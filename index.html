@@ -96,6 +96,10 @@
     .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e5e5; }
     .modal-tag { display: inline-block; padding: 0.35rem 0.9rem; background: #f0f0f0; color: #333; font-size: 0.85rem; font-weight: 500; border-radius: 999px; }
 
+    /* Modal Video */
+    .modal-video { width: 100%; border-radius: 12px 12px 0 0; overflow: hidden; background: #000; }
+    .modal-video video { width: 100%; display: block; max-height: 400px; object-fit: cover; }
+
     /* Footer */
     footer { background: #1a1a1a; color: #fff; padding: 4rem 2rem; margin-top: 4rem; }
     footer h3 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.01em; }
@@ -475,6 +479,7 @@
   <script>
     const caseStudies = {
       gaming: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/sandbox-snoopdogg.mp4',
         era: 'Industrial Era',
         title: 'Gaming Community Growth',
         subtitle: 'Built a Web3 gaming community from zero to $200k+ in NFT LAND sales through affiliate networks, KOL partnerships, and grassroots education across LATAM and Europe.',
@@ -507,6 +512,7 @@
         tags: ['Gaming', 'Community Building', 'NFTs', 'KOL Management', 'Events', 'Affiliate Marketing', 'Web3 Education']
       },
       seriesb: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4',
         era: 'Industrial Era',
         title: 'Series B Marketing Execution',
         subtitle: 'Led post-Series B marketing transformation: 30+ partnerships, full rebrand, team build-out, and 100+ conference presence for a $25M-funded blockchain protocol.',
@@ -539,6 +545,7 @@
         tags: ['Series B', 'Team Building', 'Partnerships', 'Branding', 'Protocol Launch', 'Conference Strategy', 'GTM']
       },
       bluestacks: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4',
         era: 'Industrial Era',
         title: 'BlueStacks + Game.tv Scale',
         subtitle: 'Drove massive scale for mobile gaming platforms through eSports tournaments, viral video content, and affiliate growth — reaching 2.4M+ impressions and 100k participants.',
@@ -571,6 +578,7 @@
         tags: ['eSports', 'Content Production', 'Virality', 'Affiliate Marketing', 'LIVE Events', 'Mobile Gaming', 'Community']
       },
       genlayer: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/genlayer-video.mp4',
         era: 'Industrial Era',
         title: 'GenLayer Video Pipeline',
         subtitle: 'Built an AI-powered video content pipeline for a $7.5M AI blockchain startup — combining LLM-assisted scripting with automated scheduling to achieve viral reach.',
@@ -603,6 +611,7 @@
         tags: ['AI', 'Content Operations', 'LLM Workflows', 'Virality', 'Video Production', 'Automation', 'Blockchain']
       },
       qubit: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/qubit-video.mp4',
         era: 'Industrial Era',
         title: 'Qubit Wallet — GTM From Scratch',
         subtitle: 'Designed and executed a complete go-to-market strategy for a Web3 wallet from zero — building brand identity, community, and securing tier-1 ecosystem partnerships.',
@@ -635,6 +644,7 @@
         tags: ['Web3', 'Go-To-Market', 'Brand Identity', 'Community', 'Polygon', 'Arbitrum', 'Optimism', 'Safe']
       },
       rosejericho: {
+        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4',
         era: 'Digital Era',
         title: 'Rose of Jericho — AI Wellness App',
         subtitle: 'Built an AI wellness MVP from concept to grant-funded product — combining AI personalisation, onchain reward mechanics, and autonomous agent workflows.',
@@ -835,7 +845,13 @@
       const header = document.getElementById('modalHeader');
       const body = document.getElementById('modalBody');
 
+      let videoHtml = '';
+      if (study.video) {
+        videoHtml = `<div class="modal-video"><video autoplay muted loop playsinline controls><source src="${study.video}" type="video/mp4"></video></div>`;
+      }
+
       header.innerHTML = `
+        ${videoHtml}
         <span class="modal-era">${study.era}</span>
         <h2>${study.title}</h2>
         <p class="subtitle">${study.subtitle}</p>
