@@ -1,774 +1,337 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AlexNomads — Growth & Product Operator</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; line-height: 1.6; color: #1a1a1a; }
-    .container { max-width: 920px; margin: 0 auto; padding: 2rem; }
-    
-    /* Navigation */
-    nav { position: fixed; top: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); z-index: 100; border-bottom: 1px solid #e5e5e5; }
-    nav .container { display: flex; justify-content: space-between; align-items: center; height: 64px; }
-    nav a { text-decoration: none; color: #333; font-weight: 500; padding: 0.75rem; transition: color 0.2s; }
-    nav a:hover { color: #1a73e8; }
-    
-    /* Hero Section */
-    .hero { background: linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 100%); padding: 6rem 2rem 4rem; border-bottom: 1px solid #e5e5e5; }
-    .hero h1 { font-size: 3.5rem; line-height: 1.1; margin-bottom: 1rem; letter-spacing: -0.02em; }
-    .hero p { font-size: 1.4rem; color: #666; max-width: 680px; }
-    
-    /* Era Sections */
-    section { padding: 4rem 0; border-top: 1px solid #e5e5e5; }
-    h2 { font-size: 2.5rem; margin-bottom: 2rem; letter-spacing: -0.01em; }
-    .era-title { color: #1a73e8; font-weight: 600; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
-    
-    /* Cards */
-    .card-grid { display: grid; gap: 2rem; }
-    .card { background: #f9f9f9; padding: 2rem; border-radius: 8px; border: 1px solid #e5e5e5; }
-    .card h3 { font-size: 1.4rem; margin-bottom: 0.75rem; letter-spacing: -0.01em; }
-    .card p { color: #555; font-size: 1.05rem; margin-bottom: 1rem; }
-    .tag { display: inline-block; padding: 0.3rem 0.8rem; background: #e8f0fe; color: #1a73e8; font-size: 0.85rem; font-weight: 500; border-radius: 999px; margin-right: 0.5rem; }
-    
-    /* Pricing */
-    .pricing-grid { display: grid; gap: 2rem; }
-    .pricing-card { background: white; padding: 2.5rem; border-radius: 12px; border: 2px solid #e5e5e5; transition: all 0.3s; text-align: center; }
-    .pricing-card:hover { border-color: #1a73e8; transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
-    .price { font-size: 3rem; font-weight: 700; margin: 1rem 0; }
-    .price span { font-size: 1.5rem; color: #666; font-weight: 400; }
-    .btn { display: inline-block; background: #1a73e8; color: white; padding: 1rem 2rem; border-radius: 8px; text-decoration: none; font-weight: 600; margin-top: 1rem; transition: all 0.2s; }
-    .btn:hover { background: #1557b0; transform: translateY(-2px); }
-    
-    /* Method Steps */
-    .steps { display: grid; gap: 2rem; }
-    .step { position: relative; padding-left: 2rem; }
-    .step::before { content: ''; position: absolute; left: 0.25rem; top: 0; bottom: 0; width: 3px; background: #1a73e8; border-radius: 2px; }
-    .step h3 { margin-bottom: 0.5rem; font-size: 1.3rem; }
-    
-    /* Skills List */
-    .skills-list { display: flex; flex-wrap: wrap; gap: 0.5rem; padding-left: 0; list-style: none; }
-    .skills-list li { background: #f9f9f9; padding: 0.75rem 1rem; border-radius: 6px; font-size: 1rem; color: #444; border: 1px solid #e5e5e5; }
-    
-    /* Timeline */
-    .timeline { position: relative; max-width: 800px; margin: 3rem auto; padding-left: 2rem; }
-    .timeline::before { content: ''; position: absolute; left: 0.6rem; top: 0; bottom: 0; width: 2px; background: #e5e5e5; }
-    .timeline-item { position: relative; padding-left: 2rem; margin-bottom: 3rem; }
-    .timeline-item::after { content: ''; position: absolute; left: 0.6rem; top: 0; width: 1rem; height: 1rem; background: #1a73e8; border-radius: 50%; }
-    .timeline-date { font-size: 0.95rem; color: #666; margin-bottom: 0.5rem; }
-    .timeline-title { font-size: 1.4rem; font-weight: 600; letter-spacing: -0.01em; }
-    
-    /* Stats */
-    .stats-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; margin-top: 3rem; }
-    .stat { text-align: center; padding: 1.5rem; background: #f9f9f9; border-radius: 8px; }
-    .stat-number { font-size: 2.5rem; font-weight: 700; color: #1a73e8; }
-    .stat-label { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 0.05em; }
-    
-    /* Clickable Cards */
-    .card.clickable { cursor: pointer; transition: all 0.25s ease; position: relative; }
-    .card.clickable:hover { border-color: #1a73e8; transform: translateY(-3px); box-shadow: 0 6px 20px rgba(26,115,232,0.12); }
-    .card.clickable::after { content: 'View Case Study →'; position: absolute; bottom: 1rem; right: 1.5rem; font-size: 0.85rem; color: #1a73e8; font-weight: 600; opacity: 0; transition: opacity 0.25s ease; }
-    .card.clickable:hover::after { opacity: 1; }
-
-    /* Modal Overlay */
-    .modal-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.6); backdrop-filter: blur(4px); z-index: 1000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s ease; }
-    .modal-overlay.active { opacity: 1; visibility: visible; }
-    .modal { background: #fff; border-radius: 16px; max-width: 720px; width: 92%; max-height: 85vh; overflow-y: auto; position: relative; transform: translateY(20px) scale(0.97); transition: transform 0.35s cubic-bezier(0.16,1,0.3,1); padding: 0; }
-    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
-    .modal-close { position: sticky; top: 0; display: flex; justify-content: flex-end; padding: 1rem 1.5rem 0; z-index: 2; background: linear-gradient(to bottom, #fff 60%, transparent); }
-    .modal-close button { background: #f0f0f0; border: none; width: 40px; height: 40px; border-radius: 50%; font-size: 1.3rem; cursor: pointer; color: #333; transition: background 0.2s; display: flex; align-items: center; justify-content: center; }
-    .modal-close button:hover { background: #e0e0e0; }
-    .modal-header { padding: 0 2.5rem; margin-bottom: 1.5rem; }
-    .modal-era { display: inline-block; padding: 0.3rem 0.9rem; background: #e8f0fe; color: #1a73e8; font-size: 0.8rem; font-weight: 600; border-radius: 999px; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; }
-    .modal-header h2 { font-size: 2rem; letter-spacing: -0.02em; margin-bottom: 0.5rem; }
-    .modal-header p.subtitle { font-size: 1.1rem; color: #666; line-height: 1.6; }
-    .modal-body { padding: 0 2.5rem 2.5rem; }
-    .modal-metrics { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 2rem; }
-    .modal-metric { text-align: center; padding: 1.2rem 0.5rem; background: #f5f8ff; border-radius: 10px; }
-    .modal-metric .value { font-size: 1.6rem; font-weight: 700; color: #1a73e8; }
-    .modal-metric .label { font-size: 0.78rem; color: #666; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 0.25rem; }
-    .modal-section { margin-bottom: 1.5rem; }
-    .modal-section h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.5rem; color: #1a1a1a; }
-    .modal-section p, .modal-section li { font-size: 1rem; color: #444; line-height: 1.7; }
-    .modal-section ul { padding-left: 1.3rem; }
-    .modal-section ul li { margin-bottom: 0.4rem; }
-    .modal-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid #e5e5e5; }
-    .modal-tag { display: inline-block; padding: 0.35rem 0.9rem; background: #f0f0f0; color: #333; font-size: 0.85rem; font-weight: 500; border-radius: 999px; }
-
-    /* Modal Video */
-    .modal-video { width: 100%; border-radius: 12px 12px 0 0; overflow: hidden; background: #000; }
-    .modal-video video { width: 100%; display: block; max-height: 400px; object-fit: cover; }
-
-    /* Footer */
-    footer { background: #1a1a1a; color: #fff; padding: 4rem 2rem; margin-top: 4rem; }
-    footer h3 { font-size: 2rem; margin-bottom: 1rem; letter-spacing: -0.01em; }
-    footer a { color: #8ab4f8; text-decoration: none; }
-    
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 2.5rem; }
-      .hero p { font-size: 1.1rem; }
-      section { padding: 3rem 1rem; }
-      .pricing-grid { grid-template-columns: 1fr; }
-      .modal { width: 96%; max-height: 90vh; border-radius: 12px; }
-      .modal-header, .modal-body { padding-left: 1.5rem; padding-right: 1.5rem; }
-      .modal-header h2 { font-size: 1.5rem; }
-      .modal-metrics { grid-template-columns: repeat(2, 1fr); }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alessandro - Head of Marketing</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        :root{--white:#f8f6f1;--black:#0d0c0a;--green:#9fe870;--green-deep:#163300;--forest:#1a3d00;--muted:#7a7670;--border:rgba(13,12,10,0.1);}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--white);color:var(--black);font-family:'Instrument Sans',sans-serif;font-weight:400;overflow-x:hidden;line-height:1.6;}
+        
+        /* Navigation */
+        nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3.5rem;background:rgba(248,246,241,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
+        @media (max-width:767px){nav{padding:1rem 1.5rem;}}
+        .nav-logo{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
+        .nav-links{display:none;gap:2rem;list-style:none;}
+        @media (min-width:768px){.nav-links{display:flex;}}
+        .nav-links a{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--black);padding:12px 0;display:inline-block;}
+        @media (max-width:767px){.nav-cta{display:none;}}
+        .nav-cta{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--black);border:1px solid rgba(13,12,10,0.4);padding:0.55rem 1.2rem;display:inline-flex;align-items:center;min-height:44px;}
+        
+        /* Hero Section */
+        .hero{min-height:100vh;background:var(--black);display:grid;grid-template-columns:1.3fr 1fr 1fr;grid-template-rows:auto 1fr auto;padding:0 3.5rem 3.5rem;align-items:center;}
+        @media (max-width:767px){.hero{display:flex;flex-direction:column;gap:2rem;justify-content:center;padding:2rem;}}
+        
+        .hero-era-track{display:flex;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:rgba(248,246,241,0.2);overflow:hidden;padding:4.5rem 1rem 1rem;flex-wrap:wrap;justify-content:center;}
+        @media (min-width:768px){.hero-era-track{grid-column:1/-1;grid-row:1;padding:1.5rem 3.5rem;justify-content:flex-start;font-size:0.6rem;}}
+        .hero-era-track span{flex:1;padding:0.5rem;border-right:1px solid rgba(248,246,241,0.07);white-space:nowrap;text-align:center;min-width:100px;}
+        .hero-era-track span:last-child{border-right:none;}
+        .hero-era-track span.current{color:var(--green);}
+        
+        .hero-content{display:flex;flex-direction:column;justify-content:center;gap:1.5rem;z-index:3;padding:2rem 1.5rem;text-align:center;flex-grow:1;}
+        @media (min-width:768px){.hero-content{grid-column:1/2;grid-row:2;justify-content:space-between;gap:2.5rem;padding:0 3rem 0 3.5rem;text-align:left;}}
+        .hero-type{font-family:'Fraunces',serif;font-size:clamp(2.2rem,9vw,9rem);font-weight:900;line-height:0.95;letter-spacing:-0.04em;color:var(--white);}
+        @media (min-width:768px){.hero-type{line-height:0.9;}}
+        .hero-type em{font-style:italic;color:var(--green);}
+        
+        .hero-aside{display:flex;flex-direction:column;justify-content:flex-end;gap:1.5rem;max-width:100%;}
+        @media (min-width:768px){.hero-aside{max-width:680px;}}
+        .hero-aside p{font-size:1rem;line-height:1.55;color:rgba(248,246,241,0.6);}
+        @media (min-width:768px){.hero-aside p{font-size:1.8rem;line-height:1.5;color:rgba(248,246,241,0.5);}}
+        
+        /* Hero Portrait */
+        .hero-portrait{position:relative;overflow:hidden;}
+        @media (min-width:768px){.hero-portrait{grid-column:2/-1;grid-row:1/-1;}}
+        .hero-portrait img{width:100%;height:100%;object-fit:cover;object-position:center top;display:block;}
+        
+        /* Era Section */
+        .era-section{display:flex;flex-direction:column;border-top:1px solid var(--border);}
+        @media (min-width:768px){.era-section{display:grid;grid-template-columns:repeat(3,1fr);}}
+        .era-col{padding:2.5rem 1.5rem;border-bottom:1px solid var(--border);border-right:none;display:flex;flex-direction:column;justify-content:space-between;}
+        @media (min-width:768px){.era-col{padding:5rem 6rem 5rem 3.5rem;border-right:1px solid var(--border);border-bottom:none;}}
+        .era-col:last-child{border-bottom:none;border-right:none;}
+        .era-col:hover,.era-col.active-era{background:var(--green-deep);}
+        .era-col:hover .era-num,.era-col.active-era .era-num{color:rgba(159,232,112,0.12);}
+        .era-col:hover .era-name,.era-col.active-era .era-name{color:var(--green);}
+        .era-col:hover .era-body,.era-col.active-era .era-body{color:rgba(159,232,112,0.6);}
+        .era-col:hover .era-tag,.era-col.active-era .era-tag{background:var(--green);color:var(--black);border-color:var(--green);}
+        .era-num{font-family:'Fraunces',serif;font-size:4rem;font-weight:900;line-height:1;letter-spacing:-0.05em;color:rgba(248,246,241,0.2);margin-bottom:auto;}
+        @media (min-width:768px){.era-num{font-size:7rem;}}
+        .era-name{font-family:'Fraunces',serif;font-size:1.6rem;font-weight:700;line-height:1.1;letter-spacing:-0.03em;margin:1.5rem 0 0.75rem;}
+        @media (min-width:768px){.era-name{font-size:2.2rem;margin:2rem 0 1rem;}}
+        .era-name em{font-style:italic;}
+        .era-body{font-size:0.95rem;line-height:1.7;color:var(--muted);transition:color 0.3s;}
+        @media (min-width:768px){.era-body{font-size:1rem;line-height:1.75;}}
+        .era-tag{display:inline-block;margin-top:1.5rem;padding:0.3rem 0.8rem;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;border:1px solid var(--border);color:var(--muted);}
+        @media (min-width:768px){.era-tag{margin-top:2rem;}}
+        
+        /* Problem Statement */
+        .statement{padding:4rem 1.5rem;display:flex;flex-direction:column;gap:2rem;align-items:flex-start;border-top:1px solid var(--border);}
+        @media (min-width:768px){.statement{padding:8rem 3.5rem;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center;}}
+        .stmt-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:flex;align-items:center;gap:0.8rem;}
+        @media (min-width:768px){.stmt-label{margin-bottom:2rem;}}
+        .statement-text{font-family:'Fraunces',serif;font-size:clamp(1.6rem,6vw,3.8rem);font-weight:900;line-height:1.05;letter-spacing:-0.03em;}
+        
+        /* Cases Section */
+        .cases-section{padding:4rem 0;border-top:1px solid var(--border);}
+        @media (min-width:768px){.cases-section{padding:6rem 0;}}
+        .cases-section-header{padding:0 1.5rem 2.5rem;}
+        @media (min-width:768px){.cases-section-header{padding:0 3.5rem 4rem;}}
+        .cases-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;}
+        .cases-title{font-family:'Fraunces',serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:900;line-height:1;letter-spacing:-0.03em;margin-bottom:1rem;}
+        .cases-title em{font-style:italic;color:var(--green-deep);}
+        .cases-subtitle{font-size:1rem;color:var(--muted);max-width:600px;}
+        .cases-grid{display:flex;flex-direction:column;gap:0;}
+        @media (min-width:768px){.cases-grid{display:grid;grid-template-columns:repeat(2,1fr);}}
+        .case-card{border-top:1px solid var(--border);padding:2rem 1.5rem;display:flex;flex-direction:column;gap:1.5rem;}
+        @media (min-width:768px){.case-card{border-right:1px solid var(--border);padding:3rem;}}
+        .case-meta{display:flex;gap:0.5rem;flex-wrap:wrap;}
+        .case-tag{font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--green-deep);background:var(--green);padding:0.25rem 0.5rem;}
+        .case-title{font-family:'Fraunces',serif;font-size:1.3rem;font-weight:700;line-height:1.2;letter-spacing:-0.02em;margin:0;}
+        @media (min-width:768px){.case-title{font-size:1.5rem;}}
+        .case-desc{font-size:0.95rem;line-height:1.6;color:var(--muted);}
+        @media (min-width:768px){.case-desc{font-size:1rem;}}
+        .case-stat{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;line-height:1;letter-spacing:-0.03em;margin-top:auto;padding-top:1.5rem;}
+        @media (min-width:768px){.case-stat{font-size:3rem;padding-top:2rem;}}
+        .case-stat span{display:block;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;font-weight:400;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
+        
+        /* Video Placeholders */
+        .case-video-wide{width:100%;height:280px;margin-bottom:1.5rem;border-radius:8px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;}
+        @media (max-width:767px){.case-video-wide{height:240px;}}
+        .case-video-wide video{width:100%;height:100%;object-fit:cover;}
+        
+        /* Footer */
+        footer{background:var(--black);color:var(--white);padding:3rem 1.5rem;border-top:1px solid rgba(255,255,255,0.1);}
+        @media (min-width:768px){footer{padding:4rem 3.5rem;}}
+        .footer-grid{display:flex;flex-direction:column;gap:2rem;max-width:1200px;margin:0 auto;align-items:center;text-align:center;}
+        @media (min-width:768px){.footer-grid{flex-direction:row;justify-content:space-between;align-items:center;text-align:left;}}
+        .footer-brand{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;}
+        .footer-tagline{font-size:0.85rem;color:var(--muted);margin-top:0.25rem;}
+    </style>
 </head>
 <body>
 
-  <!-- Navigation -->
-  <nav>
-    <div class="container">
-      <a href="#home">Home</a>
-      <a href="#industrial">Industrial Era</a>
-      <a href="#digital">Digital Era</a>
-      <a href="#ai-era">AI Era</a>
-      <a href="#method">Method</a>
-      <a href="#pricing">Curriculum</a>
-    </div>
-  </nav>
+<!-- Navigation -->
+<nav>
+    <a href="#" class="nav-logo">Alessandro S. Capezza</a>
+    <ul class="nav-links">
+        <li><a href="#agency">Agency-side Era</a></li>
+        <li><a href="#startup">Startup Era</a></li>
+        <li><a href="#aiagent">AI-Agent Era</a></li>
+    </ul>
+</nav>
 
-  <!-- Hero -->
-  <section id="home" class="hero">
-    <div class="container">
-      <h1>AlexNomads<br>Online Curriculum</h1>
-      <p>Growth & Product Operator specializing in AI Agents, Web3 and Startup Building — From early-stage strategy to GTM execution.</p>
+<!-- Hero Section -->
+<section class="hero">
+    <!-- Era Track -->
+    <div class="hero-era-track">
+        <span>Industrial Era</span>
+        <span>Digital Era</span>
+        <span class="current">GTM Orchestrator</span>
     </div>
-  </section>
-
-  <!-- Industrial Era -->
-  <section id="industrial" class="container">
-    <h2><span class="era-title">The Industrial Era</span>Execution & Domain Mastery</h2>
-    <div class="card-grid">
-      <div class="card clickable" onclick="openModal('gaming')">
-        <h3>Gaming Community Growth</h3>
-        <p>Reached <strong>$200k in sales</strong> selling 224+ NFT LANDs through affiliates and KOLs. Built partnerships with exchanges & gaming schools. Educated thousands via IRL meetups and National TV podcasts.</p>
-        <div class="skills-list">
-          <span class="tag">Gaming</span>
-          <span class="tag">Community</span>
-          <span class="tag">NFTs</span>
-          <span class="tag">Events</span>
+    
+    <!-- Content -->
+    <div class="hero-content">
+        <div>
+            <h1 class="hero-type">Head of Marketing<br><em>& GTM Orchestrator</em></h1>
         </div>
-      </div>
+        
+        <div class="hero-aside">
+            <p>I treat marketing like an engineering problem. I've spent years building products & GTM systems at the edge of where tech was going next: AI agents before most companies had a strategy for them, Web3 before it was mainstream.</p>
+            
+            <div style="display:flex;flex-direction:column;gap:1rem;">
+            </div>
+        </div>
+    </div>
+    
+    <!-- Portrait -->
+    <div class="hero-portrait">
+        <img src="https://raw.githubusercontent.com/alexnomads/alexnomads-online-curriculum/main/alex-portrait.png" alt="AlexNomads" loading="eager">
+    </div>
+</section>
+
+<!-- Cases Section (Track Record) -->
+<section class="cases-section" id="cases">
+    <div class="cases-section-header">
+        <span class="cases-label">Track Record</span>
+        <h2 class="cases-title">I don't talk about it. I've<em> proof of it.</em></h2>
+        <p class="cases-subtitle">My framework comes from real GTM launches, funded AI products, and campaigns that actually moved numbers. Here's the track record.</p>
+    </div>
+
+    <div class="cases-grid">
+        <!-- CASE 1: LandVault -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Series B</span>
+                <span class="case-tag">Marketing Team Building</span>
+                <span class="case-tag">Partnerships</span>
+            </div>
+            <h3 class="case-title">LandVault — Series B & Rebrand</h3>
+            <p class="case-desc">Built 30+ partnerships, hired & trained marketing team, led rebrand following $25M Series B and built a product from scratch.</p>
+            <div class="case-stat">$25M<span>Series B 30+ partnerships</span></div>
+        </div>
+
+        <!-- CASE 2: The Sandbox -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/sandbox-snoopdogg.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Gaming</span>
+                <span class="case-tag">Community</span>
+            </div>
+            <h3 class="case-title">The Sandbox — Gaming Community Growth</h3>
+            <p class="case-desc">Reached $200k in sales through affiliates and KOLs. Built partnerships with exchanges & gaming schools. Educated thousands via IRL meetups.</p>
+            <div class="case-stat">$200k<span>224+ NFTs sold</span></div>
+        </div>
+
+        <!-- CASE 3: Rose of Jericho -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI</span>
+                <span class="case-tag">Web3</span>
+                <span class="case-tag">Product</span>
+            </div>
+            <h3 class="case-title">Rose of Jericho — AI Wellness App</h3>
+            <p class="case-desc">Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Polygon ecosystem grant and Soonami hackathon.</p>
+            <div class="case-stat">18h+<span>Avg session time ┬╖ Polygon grant</span></div>
+        </div>
+
+        <!-- CASE 4: BlueStacks -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Gaming</span>
+                <span class="case-tag">Esports</span>
+                <span class="case-tag">Content</span>
+            </div>
+            <h3 class="case-title">BlueStacks + Game.tv — 500M+ Users</h3>
+            <p class="case-desc">Generated 100k eSports participants, produced 1,300+ videos reaching 2.4M impressions, organized LIVE events (300+ attendees), grew affiliate traffic 271%.</p>
+            <div class="case-stat">500M+<span>gamers reached ┬╖ 7M YouTube views</span></div>
+        </div>
+
+        <!-- CASE 5: GenLayer -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/genlayer-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI</span>
+                <span class="case-tag">Content</span>
+                <span class="case-tag">Virality</span>
+            </div>
+            <h3 class="case-title">GenLayer — Video Content Pipeline</h3>
+            <p class="case-desc">LLM-assisted script generation, editorial workflows, automated scheduler for $7.5M AI blockchain company. One video crossed half a million views.</p>
+            <div class="case-stat">550k<span>organic views ┬╖ Zero ad spend</span></div>
+        </div>
+
+        <!-- CASE 6: Qubit Wallet -->
+        <div class="case-card">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/qubit-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Web3</span>
+                <span class="case-tag">GTM</span>
+                <span class="case-tag">Brand</span>
+            </div>
+            <h3 class="case-title">Qubit Wallet — GTM From Scratch</h3>
+            <p class="case-desc">Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships.</p>
+            <div class="case-stat">500+<span>Beta testers ┬╖ 54% community growth</span></div>
+        </div>
+    </div>
+</section>
+
+<!-- Era Sections (Background Experience) -->
+<section class="era-section" id="agency">
+    <div class="era-col active-era" data-era="1">
+        <span class="era-num">01</span>
+        <div>
+            <h2 class="era-name">Agency-side<em> Era</em></h2>
+            <p class="era-body">Working with global clients across the UK, Australia, US.</p>
+            <span class="era-tag">Account management ┬╖ Sales ┬╖ Customer Success</span>
+        </div>
+    </div>
+    
+    <div class="era-col" data-era="2">
+        <span class="era-num">02</span>
+        <div>
+            <h2 class="era-name">Startup<em> Era</em></h2>
+            <p class="era-body">Bringing startup from seed to Series B. Managing high-performance marketing teams. Moving fast, driving sales.</p>
+            <span class="era-tag">Startup ┬╖ Series B ┬╖ High velocity ┬╖ MVP</span>
+        </div>
+    </div>
+    
+    <div class="era-col" data-era="3">
+        <span class="era-num">03</span>
+        <div>
+            <h2 class="era-name">Orchestration<em> Era</em></h2>
+            <p class="era-body">AI brough us Agents. I learned how to build and guide them.</p>
+            <span class="era-tag">Agents ┬╖ Automation ┬╖ Orchestration</span>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <div class="footer-brand">Alessandro S. Capezza</div>
+            <div class="footer-tagline">Head of Marketing / GTM Orchestrator</div>
+        </div>
+        
+         <div class="footer-links">
+      <a href="https://www.linkedin.com/in/alessandrocapezza/" class="footer-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        LinkedIn
+      </a>
       
-      <div class="card clickable" onclick="openModal('seriesb')">
-        <h3>Series B Marketing Execution</h3>
-        <p>Built 30+ partnerships (Chainlink, DappRadar), hired & trained marketing team, led rebrand following $25M Series B, launched Matera protocol, and joined 100+ conferences increasing reach 15%.</p>
-        <div class="skills-list">
-          <span class="tag">Series B</span>
-          <span class="tag">Team Building</span>
-          <span class="tag">Partnerships</span>
-          <span class="tag">Branding</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('bluestacks')">
-        <h3>BlueStacks + Game.tv Scale</h3>
-        <p>Generated 100k eSports participants, produced 1,300+ videos reaching 2.4M impressions, organized LIVE events (300+ attendees), grew affiliate traffic 271%.</p>
-        <div class="skills-list">
-          <span class="tag">eSports</span>
-          <span class="tag">Content</span>
-          <span class="tag">Virality</span>
-          <span class="tag">Affiliates</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('genlayer')">
-        <h3>GenLayer Video Pipeline</h3>
-        <p>LLM-assisted script generation, editorial workflows, automated scheduler for $7.5M AI blockchain company. One video crossed half a million views.</p>
-        <div class="skills-list">
-          <span class="tag">AI</span>
-          <span class="tag">Content Ops</span>
-          <span class="tag">Virality</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('qubit')">
-        <h3>Qubit Wallet — GTM From Scratch</h3>
-        <p>Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships (Polygon, Arbitrum, Optimism, Safe).</p>
-        <div class="skills-list">
-          <span class="tag">Web3</span>
-          <span class="tag">GTM</span>
-          <span class="tag">Brand</span>
-          <span class="tag">Community</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-number">$200k+</div>
-        <div class="stat-label">NFT Sales Generated</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">54%</div>
-        <div class="stat-label">Community Growth</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">2.4M+</div>
-        <div class="stat-label">Video Views</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">$25M</div>
-        <div class="stat-label">Series B Raised</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Digital Era -->
-  <section id="digital" class="container">
-    <h2><span class="era-title">The Digital Era</span>Software & Platform Building</h2>
-    <div class="card-grid">
-      <div class="card clickable" onclick="openModal('rosejericho')">
-        <h3>Rose of Jericho — AI Wellness App</h3>
-        <p>Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Polygon ecosystem grant and Soonami hackathon to fund development.</p>
-        <div class="skills-list">
-          <span class="tag">AI</span>
-          <span class="tag">Web3</span>
-          <span class="tag">Product</span>
-          <span class="tag">MVP</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('riskassessment')">
-        <h3>Risk Assessment Framework</h3>
-        <p>Developed systematic approach to evaluating career transitions in the AI era. Built diagnostic tools for identifying vulnerability and opportunity.</p>
-        <div class="skills-list">
-          <span class="tag">Analytics</span>
-          <span class="tag">Strategy</span>
-          <span class="tag">Tools</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('agentsetup')">
-        <h3>Agent Setup & Architecture</h3>
-        <p>Designed autonomous agent systems for marketing workflows, community management, and content creation. Implemented orchestration patterns.</p>
-        <div class="skills-list">
-          <span class="tag">Agents</span>
-          <span class="tag">Automation</span>
-          <span class="tag">Systems</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('analytics')">
-        <h3>Data Analytics Stack</h3>
-        <p>Built analytics infrastructure for tracking community health, conversion funnels, and content performance across platforms.</p>
-        <div class="skills-list">
-          <span class="tag">Analytics</span>
-          <span class="tag">Data</span>
-          <span class="tag">Metrics</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('influencer')">
-        <h3>Influencer Marketing Systems</h3>
-        <p>Developed framework for identifying, onboarding, and managing creator networks. Built incentive models for sustainable partnerships.</p>
-        <div class="skills-list">
-          <span class="tag">Influencers</span>
-          <span class="tag">Networks</span>
-          <span class="tag">Growth</span>
-        </div>
-      </div>
-
-      <div class="card clickable" onclick="openModal('prediction')">
-        <h3>Prediction Markets Integration</h3>
-        <p>Leveraged betting mechanics and prediction markets for incentive alignment, community engagement, and market-making strategies.</p>
-        <div class="skills-list">
-          <span class="tag">Betting</span>
-          <span class="tag">Markets</span>
-          <span class="tag">Incentives</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="stats-grid">
-      <div class="stat">
-        <div class="stat-number">8.4%</div>
-        <div class="stat-label">Engagement Rate</div>
-      </div>
-      <div class="stat">
-        <div class="stat-number">54%</div>
-        <div class="stat-label">Community Growth</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- AI Era -->
-  <section id="ai-era" class="container">
-    <h2><span class="era-title">The AI Era</span>Orchestration & Autonomy</h2>
-    <p style="font-size: 1.2rem; color: #555; margin-bottom: 2rem;">
-      The skills that got you here won't get you there. I help mid-career professionals and operators leverage AI as force multipliers — not competitors.
-    </p>
-
-    <div class="steps">
-      <div class="step">
-        <h3>01. Audit Current Position</h3>
-        <p>We diagnose your actual situation: skill-to-market matching, role vulnerability analysis, and immediate action items. No vague frameworks — real data.</p>
-      </div>
-
-      <div class="step">
-        <h3>02. Map AI Leverage Points</h3>
-        <p>Identify where AI can multiply your work. Not every task needs automation — but the right ones can free up massive capacity for high-leverage thinking.</p>
-      </div>
-
-      <div class="step">
-        <h3>03. Build Your System</h3>
-        <p>Construct a working prototype that demonstrates your new approach. Clarity comes from building, not planning decks.</p>
-      </div>
-
-      <div class="step">
-        <h3>04. Iterate & Scale</h3>
-        <p>Measure results, refine approaches, and expand. Treat marketing and career strategy like engineering problems — testable hypotheses, measurable outputs.</p>
-      </div>
-    </div>
-
-    <div class="pricing-card" style="margin-top: 2rem; text-align: left;">
-      <h3>The Method</h3>
-      <p style="font-size: 1.1rem; margin-bottom: 1rem;">A diagnostic built on real systems. No generic frameworks — a structured process built around your role, industry, and what's actually changing in your field.</p>
-      <ul style="text-align: left; padding-left: 1.5rem; font-size: 1.05rem;">
-        <li><strong>Current role vulnerability analysis</strong></li>
-        <li><strong>Skill-to-market matching</strong></li>
-        <li><strong>Immediate action items</strong></li>
-        <li><strong>Narrative development</strong></li>
-        <li><strong>Capability roadmap</strong></li>
-      </ul>
-    </div>
-  </section>
-
-  <!-- Modal Overlay -->
-  <div class="modal-overlay" id="modalOverlay" onclick="closeModalOutside(event)">
-    <div class="modal" id="modalContent">
-      <div class="modal-close"><button onclick="closeModal()" aria-label="Close">✕</button></div>
-      <div class="modal-header" id="modalHeader"></div>
-      <div class="modal-body" id="modalBody"></div>
+      <a href="https://x.com/alexNomads" class="footer-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L3.99 21.75H.69l7.73-8.835L.03 2.25h6.164l4.715 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        X/Twitter
+      </a>
+      
+      <a href="https://www.instagram.com/alexislimitless/" class="footer-link" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+        Instagram
+      </a>
+      
+      <a href="mailto:aicoachalex@gmail.com" class="footer-email">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+        colivingvalley@gmail.com
+      </a>
     </div>
   </div>
-
-  <script>
-    const caseStudies = {
-      gaming: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/sandbox-snoopdogg.mp4',
-        era: 'Industrial Era',
-        title: 'Gaming Community Growth',
-        subtitle: 'Built a Web3 gaming community from zero to $200k+ in NFT LAND sales through affiliate networks, KOL partnerships, and grassroots education across LATAM and Europe.',
-        metrics: [
-          { value: '$200k+', label: 'NFT Sales' },
-          { value: '224+', label: 'LANDs Sold' },
-          { value: '1000s', label: 'Educated' },
-          { value: 'National TV', label: 'Media Reach' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'A Web3 gaming platform needed to sell virtual LANDs in a nascent NFT market where most potential buyers had never interacted with blockchain technology or understood the value proposition of digital real estate.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Recruited and managed a network of affiliate partners and KOLs (Key Opinion Leaders) across gaming and crypto communities',
-              'Built strategic partnerships with cryptocurrency exchanges and gaming schools to reach new audiences',
-              'Organized IRL meetups and educational events to demystify Web3 gaming for mainstream audiences',
-              'Secured National TV podcast appearances to build credibility and reach mass-market viewers',
-              'Created educational content pipeline translating complex blockchain concepts into accessible gaming narratives'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Sold 224+ NFT LANDs generating over $200k in revenue. Educated thousands of potential users through in-person events and media appearances. Established a replicable community-growth playbook for Web3 gaming projects.'
-          }
-        ],
-        tags: ['Gaming', 'Community Building', 'NFTs', 'KOL Management', 'Events', 'Affiliate Marketing', 'Web3 Education']
-      },
-      seriesb: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4',
-        era: 'Industrial Era',
-        title: 'Series B Marketing Execution',
-        subtitle: 'Led post-Series B marketing transformation: 30+ partnerships, full rebrand, team build-out, and 100+ conference presence for a $25M-funded blockchain protocol.',
-        metrics: [
-          { value: '$25M', label: 'Series B Raised' },
-          { value: '30+', label: 'Partnerships' },
-          { value: '100+', label: 'Conferences' },
-          { value: '15%', label: 'Reach Growth' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Following a $25M Series B raise, the company needed to rapidly scale its marketing operations, establish industry partnerships, and rebrand to match its new positioning — all while launching a new protocol (Matera).'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Negotiated and closed 30+ strategic partnerships including Chainlink, DappRadar, and other top-tier ecosystem players',
-              'Hired, onboarded, and trained a marketing team to handle scaled operations',
-              'Led a complete rebrand to align company identity with post-Series B ambitions',
-              'Orchestrated the launch of the Matera protocol with coordinated go-to-market campaigns',
-              'Attended and represented the company at 100+ industry conferences worldwide'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Increased overall brand reach by 15%. Built a sustainable partnership network that generated ongoing co-marketing opportunities. Successfully launched Matera protocol with strong initial traction. Created a scalable marketing infrastructure for continued growth.'
-          }
-        ],
-        tags: ['Series B', 'Team Building', 'Partnerships', 'Branding', 'Protocol Launch', 'Conference Strategy', 'GTM']
-      },
-      bluestacks: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4',
-        era: 'Industrial Era',
-        title: 'BlueStacks + Game.tv Scale',
-        subtitle: 'Drove massive scale for mobile gaming platforms through eSports tournaments, viral video content, and affiliate growth — reaching 2.4M+ impressions and 100k participants.',
-        metrics: [
-          { value: '100k', label: 'eSports Participants' },
-          { value: '1,300+', label: 'Videos Produced' },
-          { value: '2.4M+', label: 'Impressions' },
-          { value: '271%', label: 'Affiliate Growth' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'BlueStacks and Game.tv needed to grow their user base in competitive mobile gaming markets, requiring high-volume content production, community events, and scalable acquisition channels.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Designed and executed eSports tournament infrastructure that attracted 100k+ participants',
-              'Built a content production pipeline generating 1,300+ videos across platforms',
-              'Organized LIVE in-person gaming events with 300+ attendees per event',
-              'Developed affiliate marketing systems that drove 271% traffic growth',
-              'Created viral content strategies optimized for gaming audiences across YouTube, Twitch, and social platforms'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Achieved 2.4M+ video impressions across platforms. Grew affiliate traffic by 271%. Built a self-sustaining tournament community of 100k participants. Established repeatable event and content frameworks for ongoing engagement.'
-          }
-        ],
-        tags: ['eSports', 'Content Production', 'Virality', 'Affiliate Marketing', 'LIVE Events', 'Mobile Gaming', 'Community']
-      },
-      genlayer: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/genlayer-video.mp4',
-        era: 'Industrial Era',
-        title: 'GenLayer Video Pipeline',
-        subtitle: 'Built an AI-powered video content pipeline for a $7.5M AI blockchain startup — combining LLM-assisted scripting with automated scheduling to achieve viral reach.',
-        metrics: [
-          { value: '500k+', label: 'Top Video Views' },
-          { value: '$7.5M', label: 'Company Valuation' },
-          { value: 'LLM', label: 'Script Generation' },
-          { value: 'Auto', label: 'Scheduling' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'GenLayer, a $7.5M AI blockchain company, needed a scalable video content strategy that could consistently produce high-quality educational and marketing content without a large production team.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Developed LLM-assisted script generation workflows to accelerate content ideation and writing',
-              'Built editorial review processes ensuring quality control while maintaining high output velocity',
-              'Implemented automated scheduling systems for consistent cross-platform publishing',
-              'Optimized content formats and hooks for maximum algorithmic reach',
-              'Created feedback loops using analytics to continuously improve content performance'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'One video crossed half a million views organically. Built a content engine that produced consistent, high-quality output at scale. Demonstrated that AI-assisted workflows could match or exceed traditional production quality while dramatically reducing cost and time.'
-          }
-        ],
-        tags: ['AI', 'Content Operations', 'LLM Workflows', 'Virality', 'Video Production', 'Automation', 'Blockchain']
-      },
-      qubit: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/qubit-video.mp4',
-        era: 'Industrial Era',
-        title: 'Qubit Wallet — GTM From Scratch',
-        subtitle: 'Designed and executed a complete go-to-market strategy for a Web3 wallet from zero — building brand identity, community, and securing tier-1 ecosystem partnerships.',
-        metrics: [
-          { value: '500', label: 'Beta Testers' },
-          { value: '8.4%', label: 'Engagement Rate' },
-          { value: '54%', label: 'Community Growth' },
-          { value: '4', label: 'Chain Partners' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Qubit Wallet needed a full go-to-market strategy built from the ground up — no existing brand, no community, and competing in the crowded Web3 wallet space against established players.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Crafted complete brand identity including visual design, messaging, and positioning strategy',
-              'Built community engagement systems achieving an exceptional 8.4% engagement rate',
-              'Recruited and onboarded 500 Beta testers through targeted outreach and referral programs',
-              'Secured strategic partnerships with Polygon, Arbitrum, Optimism, and Safe',
-              'Grew community by 54% through organic content and ecosystem participation'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Achieved 8.4% engagement rate (industry average is ~1-3%). Grew community 54% month-over-month. Secured partnerships with four major blockchain ecosystems. Launched a successful Beta program with 500 active testers providing actionable feedback.'
-          }
-        ],
-        tags: ['Web3', 'Go-To-Market', 'Brand Identity', 'Community', 'Polygon', 'Arbitrum', 'Optimism', 'Safe']
-      },
-      rosejericho: {
-        video: 'https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4',
-        era: 'Digital Era',
-        title: 'Rose of Jericho — AI Wellness App',
-        subtitle: 'Built an AI wellness MVP from concept to grant-funded product — combining AI personalisation, onchain reward mechanics, and autonomous agent workflows.',
-        metrics: [
-          { value: 'MVP', label: 'Stage' },
-          { value: 'Polygon', label: 'Grant Won' },
-          { value: 'Soonami', label: 'Hackathon Won' },
-          { value: 'N8N', label: 'Agent Stack' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'The wellness space lacked products that combined modern AI personalisation with sustainable engagement mechanics. Existing apps relied on subscriptions and willpower alone — without leveraging emerging technology to drive lasting behavior change.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Designed product architecture combining AI-driven personalisation with onchain reward systems',
-              'Built autonomous agent workflows using N8N for content curation and user engagement',
-              'Applied to and won a Polygon ecosystem grant to validate the Web3 component',
-              'Won the Soonami hackathon, securing additional funding and mentorship',
-              'Developed the MVP with a lean team, iterating rapidly based on early user feedback'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Successfully built a working MVP that demonstrated the viability of AI + Web3 wellness products. Won both a Polygon grant and Soonami hackathon, validating the concept with industry experts. Established a product foundation ready for scaling.'
-          }
-        ],
-        tags: ['AI', 'Web3', 'Product Development', 'MVP', 'N8N', 'Polygon', 'Hackathon', 'Wellness']
-      },
-      riskassessment: {
-        era: 'Digital Era',
-        title: 'Risk Assessment Framework',
-        subtitle: 'Created a systematic diagnostic framework for evaluating career vulnerability in the AI era — turning abstract disruption anxiety into actionable transition plans.',
-        metrics: [
-          { value: 'Diagnostic', label: 'Tool Type' },
-          { value: 'AI Era', label: 'Focus' },
-          { value: 'Systematic', label: 'Approach' },
-          { value: 'Actionable', label: 'Output' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Mid-career professionals face growing uncertainty about how AI will impact their roles, but lack concrete tools to assess their actual vulnerability and identify high-leverage transition paths.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Researched AI automation patterns across industries to identify which skills and roles are most at risk',
-              'Developed a scoring framework that maps current capabilities against future market demand',
-              'Built diagnostic questionnaires that surface hidden vulnerabilities and overlooked strengths',
-              'Created actionable output formats: risk scores, opportunity maps, and prioritized action plans',
-              'Tested and iterated the framework with real career-transition coaching clients'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Produced a reusable framework now central to the AlexNomads coaching methodology. Clients report clarity and reduced anxiety within the first diagnostic session. The tool surfaces non-obvious pivot opportunities that generic career advice misses entirely.'
-          }
-        ],
-        tags: ['Analytics', 'Strategy', 'Career Transitions', 'AI Disruption', 'Diagnostic Tools', 'Coaching']
-      },
-      agentsetup: {
-        era: 'Digital Era',
-        title: 'Agent Setup & Architecture',
-        subtitle: 'Designed and deployed autonomous AI agent systems for marketing automation, community management, and content creation — building the operational backbone for AI-era businesses.',
-        metrics: [
-          { value: 'Multi-Agent', label: 'Architecture' },
-          { value: 'Marketing', label: 'Primary Use' },
-          { value: 'Autonomous', label: 'Operation Mode' },
-          { value: 'Scalable', label: 'Design' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Businesses needed to leverage AI agents for operational tasks but lacked the architecture knowledge to build reliable, autonomous systems that could handle marketing workflows without constant human supervision.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Designed multi-agent orchestration patterns for marketing, community, and content workflows',
-              'Implemented agent systems with appropriate guardrails and human-in-the-loop checkpoints',
-              'Built monitoring and feedback loops to ensure quality and catch edge cases',
-              'Created reusable templates and frameworks for rapid agent deployment',
-              'Documented architecture patterns for knowledge transfer and team adoption'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Delivered production-ready agent systems that reduced manual marketing operations by significant margins. Created an agent architecture playbook now used across multiple client engagements. Demonstrated that autonomous agents can handle nuanced marketing tasks when properly orchestrated.'
-          }
-        ],
-        tags: ['AI Agents', 'Automation', 'Systems Design', 'Marketing Ops', 'Orchestration', 'N8N']
-      },
-      analytics: {
-        era: 'Digital Era',
-        title: 'Data Analytics Stack',
-        subtitle: 'Built end-to-end analytics infrastructure for tracking community health, conversion funnels, and content performance — turning raw data into actionable growth insights.',
-        metrics: [
-          { value: 'End-to-End', label: 'Coverage' },
-          { value: 'Real-time', label: 'Monitoring' },
-          { value: 'Multi-Platform', label: 'Integration' },
-          { value: 'Actionable', label: 'Insights' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Growth teams operated across multiple platforms (Discord, Telegram, Twitter, YouTube) with no unified view of community health or content performance. Decision-making relied on gut feeling rather than data.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Designed data collection pipelines aggregating metrics from Discord, Telegram, Twitter, and content platforms',
-              'Built conversion funnel tracking from initial awareness through community join to active participation',
-              'Created dashboards for real-time monitoring of community health indicators',
-              'Implemented content performance scoring to identify winning formats and topics',
-              'Developed automated reporting workflows for stakeholder updates'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Unified previously siloed data into a single analytics view. Enabled data-driven content decisions that improved engagement rates. Provided leadership with real-time visibility into community growth and health metrics. Reduced reporting overhead through automation.'
-          }
-        ],
-        tags: ['Analytics', 'Data Infrastructure', 'Dashboards', 'Community Metrics', 'Conversion Tracking']
-      },
-      influencer: {
-        era: 'Digital Era',
-        title: 'Influencer Marketing Systems',
-        subtitle: 'Developed a complete framework for identifying, onboarding, and managing creator networks — with incentive models designed for sustainable, long-term partnerships.',
-        metrics: [
-          { value: 'Framework', label: 'Deliverable' },
-          { value: 'Creator', label: 'Network Type' },
-          { value: 'Sustainable', label: 'Partnership Model' },
-          { value: 'Scalable', label: 'Onboarding' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Most influencer marketing in Web3 relied on one-off paid posts with little ROI tracking. Companies needed a systematic approach to build lasting creator relationships that generated sustained value.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Developed scoring criteria for identifying high-impact creators aligned with brand values',
-              'Built streamlined onboarding processes reducing time-to-first-campaign',
-              'Designed incentive models balancing upfront payments with performance-based rewards',
-              'Created management systems for tracking deliverables, engagement, and ROI across creator cohorts',
-              'Implemented feedback loops for continuous relationship optimization'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Established a replicable influencer marketing system adopted across multiple projects. Shifted from transactional influencer relationships to strategic partnerships. Created measurable ROI tracking that justified continued investment in creator networks.'
-          }
-        ],
-        tags: ['Influencer Marketing', 'Creator Networks', 'Growth', 'Partnerships', 'Incentive Design', 'KOL Management']
-      },
-      prediction: {
-        era: 'Digital Era',
-        title: 'Prediction Markets Integration',
-        subtitle: 'Leveraged prediction market mechanics and betting-style incentives for community engagement, market intelligence, and novel user acquisition strategies.',
-        metrics: [
-          { value: 'Novel', label: 'Approach' },
-          { value: 'Betting', label: 'Mechanics' },
-          { value: 'Engagement', label: 'Primary Goal' },
-          { value: 'Market Intel', label: 'Secondary Goal' }
-        ],
-        sections: [
-          {
-            title: 'The Challenge',
-            content: 'Traditional community engagement tactics (airdrops, quests, bounties) were losing effectiveness. Projects needed novel incentive alignment mechanisms that tapped into genuine user interest and participation.'
-          },
-          {
-            title: 'The Approach',
-            list: [
-              'Studied prediction market platforms and betting mechanics to identify applicable engagement patterns',
-              'Designed community challenges using prediction-style incentives that rewarded knowledge and participation',
-              'Built integration strategies connecting prediction market data with marketing intelligence',
-              'Created gamified engagement loops where users\'  predictions drove deeper community involvement',
-              'Developed market-making strategies leveraging community sentiment data'
-            ]
-          },
-          {
-            title: 'The Results',
-            content: 'Introduced a differentiated engagement mechanic that stood out in a crowded Web3 landscape. Generated higher-quality community participation compared to traditional methods. Created a bridge between DeFi mechanics and community growth strategies.'
-          }
-        ],
-        tags: ['Prediction Markets', 'Betting Mechanics', 'Incentive Design', 'Community Engagement', 'DeFi', 'Gamification']
-      }
-    };
-
-    function openModal(id) {
-      const study = caseStudies[id];
-      if (!study) return;
-
-      const header = document.getElementById('modalHeader');
-      const body = document.getElementById('modalBody');
-
-      let videoHtml = '';
-      if (study.video) {
-        videoHtml = `<div class="modal-video"><video autoplay muted loop playsinline controls><source src="${study.video}" type="video/mp4"></video></div>`;
-      }
-
-      header.innerHTML = `
-        ${videoHtml}
-        <span class="modal-era">${study.era}</span>
-        <h2>${study.title}</h2>
-        <p class="subtitle">${study.subtitle}</p>
-      `;
-
-      let metricsHtml = '<div class="modal-metrics">';
-      study.metrics.forEach(m => {
-        metricsHtml += `<div class="modal-metric"><div class="value">${m.value}</div><div class="label">${m.label}</div></div>`;
-      });
-      metricsHtml += '</div>';
-
-      let sectionsHtml = '';
-      study.sections.forEach(s => {
-        sectionsHtml += `<div class="modal-section"><h3>${s.title}</h3>`;
-        if (s.content) sectionsHtml += `<p>${s.content}</p>`;
-        if (s.list) {
-          sectionsHtml += '<ul>';
-          s.list.forEach(item => { sectionsHtml += `<li>${item}</li>`; });
-          sectionsHtml += '</ul>';
-        }
-        sectionsHtml += '</div>';
-      });
-
-      let tagsHtml = '<div class="modal-tags">';
-      study.tags.forEach(t => { tagsHtml += `<span class="modal-tag">${t}</span>`; });
-      tagsHtml += '</div>';
-
-      body.innerHTML = metricsHtml + sectionsHtml + tagsHtml;
-
-      document.getElementById('modalOverlay').classList.add('active');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeModal() {
-      document.getElementById('modalOverlay').classList.remove('active');
-      document.body.style.overflow = '';
-    }
-
-    function closeModalOutside(event) {
-      if (event.target === document.getElementById('modalOverlay')) closeModal();
-    }
-
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') closeModal();
-    });
-  </script>
+</footer>
+            </a>
+        </div>
+    </div>
+</footer>
 
 </body>
 </html>
