@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Game.tv Case Study — AI Bot to 4M Installs</title>
+<meta name="description" content="A $25M-backed AI matchmaking bot on Discord. Three conflicting audiences, one continuous intelligence loop, and the signal that turned a bot into a growth engine.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#130E1D;--bg-card:#1E1830;--bg-card-hi:#241C3A;--accent:#F03C1E;--accent-soft:rgba(240,60,30,0.14);--text:#FFFFFF;--text-muted:#A79FB5;--text-dim:#7A7290;--line:#2A2340}
+*{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;overflow-x:hidden;position:relative}
+body::before{content:"";position:fixed;inset:0;background-image:radial-gradient(circle,rgba(240,60,30,0.18) 1px,transparent 1px);background-size:34px 34px;pointer-events:none;z-index:0;opacity:.5}
+.nav{position:sticky;top:0;z-index:50;display:flex;align-items:center;gap:12px;padding:22px 48px;background:rgba(19,14,29,0.85);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.logo{font-family:'Anton',sans-serif;font-size:22px;letter-spacing:.5px;color:var(--accent);font-style:italic;transform:skewX(-6deg);display:inline-block;text-decoration:none}
+.nav-name{font-family:'Inter',sans-serif;font-size:14px;font-weight:600;color:var(--text)}
+.nav-x{font-family:'Anton',sans-serif;font-size:16px;color:var(--text-dim);font-style:italic}
+.nav-flags{font-size:14px;letter-spacing:2px}
+.nav-flags a{text-decoration:none;opacity:.85;transition:opacity .2s,transform .2s}
+.nav-flags a:hover{opacity:1;transform:translateY(-1px)}
+.nav-spacer{flex:1}
+.nav-back{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-decoration:none;letter-spacing:.04em;transition:color .2s}
+.nav-back:hover{color:var(--accent)}
+.signal-rail{position:fixed;left:50%;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,transparent,var(--line) 4%,var(--line) 96%,transparent);transform:translateX(-50%);z-index:1;pointer-events:none}
+.signal-dot{position:absolute;left:50%;width:14px;height:14px;border-radius:50%;background:var(--line);border:2px solid var(--bg);transform:translateX(-50%);transition:background .4s,box-shadow .4s;z-index:2}
+.signal-dot.lit{background:var(--accent);box-shadow:0 0 0 6px var(--accent-soft),0 0 24px 4px rgba(240,60,30,.5)}
+.hero{position:relative;z-index:2;padding:120px 48px 90px;max-width:900px;margin:0 auto;text-align:center}
+.eyebrow{font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.14em;color:var(--accent);text-transform:uppercase;margin-bottom:28px;display:inline-block}
+.hero h1{font-family:'Anton',sans-serif;font-size:clamp(36px,6.5vw,78px);line-height:1.04;letter-spacing:.01em;text-transform:uppercase;margin-bottom:30px}
+.hero h1 .hl{color:var(--accent)}
+.hero p{font-size:19px;line-height:1.6;color:var(--text-muted);max-width:640px;margin:0 auto;font-weight:400}
+.connector{display:flex;justify-content:center;position:relative;z-index:2;padding:10px 0 60px}
+.connector-dot{width:12px;height:12px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 6px var(--accent-soft)}
+.connector-video{
+  position:relative;z-index:2;max-width:760px;margin:0 auto;padding:10px 48px 60px;
+}
+.connector-video .video-frame{
+  position:relative;border-radius:10px;overflow:hidden;border:1px solid var(--line);
+  background:var(--bg-card);aspect-ratio:16/9;
+}
+.connector-video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+@media(max-width:720px){.connector-video{padding:10px 20px 60px}}
+.stats{position:relative;z-index:2;max-width:1000px;margin:0 auto;padding:0 48px 100px;display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:4px;overflow:hidden}
+.stat{background:var(--bg);padding:34px 24px;text-align:center}
+.stat-num{font-family:'Anton',sans-serif;font-size:36px;color:var(--text);letter-spacing:.01em}
+.stat-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-top:8px;line-height:1.4}
+.showcase{position:relative;z-index:2;max-width:1100px;margin:0 auto;padding:20px 48px 140px}
+.showcase-head{text-align:center;margin-bottom:48px}
+.showcase-head .kicker{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;display:block}
+.showcase-head h2{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,44px);text-transform:uppercase}
+.showcase-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+@media(max-width:640px){.showcase-grid{grid-template-columns:1fr}}
+.showcase-card{background:var(--bg-card);border:1px solid var(--line);border-radius:10px;padding:28px 26px;transition:transform .25s,border-color .25s,background .25s;cursor:pointer;text-decoration:none;display:block;color:inherit}
+.showcase-card:hover{transform:translateY(-4px);border-color:var(--accent);background:var(--bg-card-hi)}
+.showcase-card .num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.08em}
+.showcase-card h3{font-family:'Anton',sans-serif;font-size:20px;text-transform:uppercase;margin:10px 0 10px;letter-spacing:.01em}
+.showcase-card p{font-size:13.5px;color:var(--text-muted);line-height:1.5}
+.showcase-card .go{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em}
+.chapter{position:relative;z-index:2;max-width:760px;margin:0 auto;padding:90px 48px;scroll-margin-top:100px}
+.chapter-eyebrow{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+.chapter-num{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--accent);background:var(--accent-soft);border:1px solid rgba(240,60,30,.35);border-radius:20px;padding:5px 12px;letter-spacing:.06em}
+.chapter-dim{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em}
+.chapter h2{font-family:'Anton',sans-serif;font-size:clamp(26px,4.2vw,42px);text-transform:uppercase;line-height:1.1;margin-bottom:26px}
+.chapter .lead{font-size:18px;color:var(--text);line-height:1.6;margin-bottom:20px;font-weight:600}
+.chapter p{font-size:15.5px;color:var(--text-muted);line-height:1.75;margin-bottom:16px}
+.chapter p strong{color:var(--text);font-weight:700}
+.panel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:26px 0}
+.panel-card{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:18px}
+.panel-card .p-icon{font-size:20px;margin-bottom:6px;display:block}
+.panel-card .p-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:8px}
+.panel-card h4{font-size:14px;font-weight:700;color:var(--text);margin-bottom:8px;line-height:1.3}
+.panel-card p{font-size:12.5px;color:var(--text-muted);line-height:1.5;margin-bottom:0}
+.split{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:28px 0}
+.split-col{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:20px 22px}
+.split-col.no h4{color:var(--text-dim)}
+.split-col.yes h4{color:var(--accent)}
+.split-col h4{font-family:'JetBrains Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px}
+.split-col ul{list-style:none}
+.split-col.no li{color:var(--text-dim);text-decoration:line-through;font-size:14px;margin-bottom:8px}
+.split-col.yes li{color:var(--text);font-size:14px;margin-bottom:8px;font-weight:600}
+.arch{
+  position:relative;background:var(--bg-card);border:1px solid var(--line);border-radius:8px;
+  padding:24px 0;margin:26px 0;font-family:'JetBrains Mono',monospace;font-size:13px;
+  color:var(--text-muted);overflow:hidden;white-space:nowrap;
+}
+.arch::before,.arch::after{
+  content:"";position:absolute;top:0;bottom:0;width:60px;z-index:2;pointer-events:none;
+}
+.arch::before{left:0;background:linear-gradient(90deg,var(--bg-card),transparent)}
+.arch::after{right:0;background:linear-gradient(270deg,var(--bg-card),transparent)}
+.arch-track{display:inline-flex;align-items:center;animation:arch-highway 16s linear infinite;padding-left:24px}
+.arch:hover .arch-track{animation-play-state:paused}
+@keyframes arch-highway{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.arch .box{color:var(--text);background:var(--bg-card-hi);border:1px solid var(--line);border-radius:4px;padding:6px 12px;display:inline-block;flex-shrink:0}
+.arch .arrow{color:var(--accent);margin:0 8px;flex-shrink:0}
+@media(prefers-reduced-motion:reduce){.arch-track{animation:none}}
+.fail-block{background:var(--accent-soft);border:1px solid rgba(240,60,30,.35);border-radius:8px;padding:20px 24px;margin:24px 0}
+.fail-block h4{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fail-block p{color:var(--text);margin-bottom:0;font-size:14.5px}
+.fail-block-alt{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:20px 24px;margin:24px 0}
+.fail-block-alt h4{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px}
+.fail-block-alt p{color:var(--text);margin-bottom:0;font-size:14.5px}
+.img-row{margin:26px 0}
+.img-row-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:block}
+.img-pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.img-pair img{width:100%;height:420px;object-fit:cover;object-position:top center;border-radius:6px;border:1px solid var(--line);display:block}
+@media(max-width:720px){.img-pair img{height:300px}}
+.video-embed{margin:26px 0;text-align:center}
+.video-embed iframe{border-radius:8px;border:1px solid var(--line);max-width:100%}
+.video-embed-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:block}
+.team-strip{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:20px 22px;margin:24px 0}
+.team-strip .t-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;display:block}
+.team-tags{display:flex;gap:8px;flex-wrap:wrap}
+.team-tags span{font-size:12.5px;color:var(--text);background:var(--bg-card-hi);border:1px solid var(--line);border-radius:6px;padding:5px 12px}
+.web-wrap{position:relative;max-width:380px;margin:16px auto 0;aspect-ratio:1/1}
+.web-wrap svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.web-edge{stroke:var(--line);stroke-width:1.5;fill:none}
+.web-spoke{stroke:var(--accent);stroke-width:1.5;fill:none;stroke-dasharray:5 6;opacity:.6;animation:web-flow 4s linear infinite}
+@keyframes web-flow{to{stroke-dashoffset:-22}}
+.web-hub{fill:var(--accent)}
+.web-dot{fill:var(--bg-card-hi);stroke:var(--accent);stroke-width:2}
+.web-node{position:absolute;width:118px;text-align:center;transform:translate(-50%,-50%);pointer-events:none}
+.web-node span{font-family:'JetBrains Mono',monospace;font-size:10.5px;color:var(--text-muted);line-height:1.35;display:block}
+@media(max-width:720px){.web-wrap{max-width:280px}.web-node{width:92px}.web-node span{font-size:9px}}
+@media(prefers-reduced-motion:reduce){.web-spoke{animation:none}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+.milestone-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin:24px 0}
+.milestone{background:var(--bg-card);padding:22px 20px}
+.milestone .m-icon{font-size:20px;margin-bottom:8px;display:block}
+.milestone .m-num{font-family:'Anton',sans-serif;font-size:26px;color:var(--text);letter-spacing:.01em;line-height:1}
+.milestone .m-label{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-muted);text-transform:uppercase;margin-top:8px;line-height:1.4}
+.badges{display:flex;gap:10px;flex-wrap:wrap;margin:20px 0}
+.badge{font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--text-muted);border:1px solid var(--line);border-radius:20px;padding:6px 14px}
+.badge::before{content:"● ";color:var(--accent)}
+.discovery{margin:30px 0}
+.discovery-label{font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;margin-bottom:14px;display:block}
+.disc-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.disc-step{background:var(--bg-card);border:1px solid var(--line);border-radius:8px;padding:14px 10px;text-align:center;position:relative;cursor:default;transition:border-color .2s,background .2s}
+.disc-step:hover{border-color:var(--accent);background:var(--bg-card-hi)}
+.disc-step .d-icon{font-size:20px;margin-bottom:6px;display:block}
+.disc-step .d-num{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--accent);margin-bottom:4px}
+.disc-step h5{font-size:12px;font-weight:600;color:var(--text);line-height:1.3}
+.disc-tip{
+  position:absolute;bottom:calc(100% + 12px);left:50%;transform:translate(-50%,6px);
+  width:220px;background:var(--bg-card-hi);border:1px solid var(--accent);border-radius:8px;
+  padding:14px 16px;text-align:left;z-index:10;opacity:0;pointer-events:none;
+  transition:opacity .2s,transform .2s;box-shadow:0 12px 28px rgba(0,0,0,.45);
+}
+.disc-tip::after{
+  content:"";position:absolute;top:100%;left:50%;transform:translateX(-50%);
+  border:6px solid transparent;border-top-color:var(--accent);
+}
+.disc-step:hover .disc-tip{opacity:1;transform:translate(-50%,0);pointer-events:auto}
+.disc-tip .tip-label{
+  font-family:'JetBrains Mono',monospace;font-size:9.5px;color:var(--accent);
+  text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;display:block;
+}
+.disc-tip p{font-size:12px;color:var(--text-muted);line-height:1.45;margin-bottom:10px}
+.disc-tip p:last-child{margin-bottom:0}
+@media(max-width:900px){.disc-tip{width:180px;font-size:11px}}
+.close{position:relative;z-index:2;max-width:600px;margin:0 auto;text-align:center;padding:140px 48px 100px}
+.close p{font-size:20px;line-height:1.6;color:var(--text);font-weight:600;margin-bottom:22px}
+.close .final{font-size:15px;color:var(--text-muted);font-weight:400}
+.footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:32px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:14px}
+.footer a,.footer span{color:var(--text-muted);text-decoration:none;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:.02em}
+.footer a:hover{color:var(--accent)}
+@media(max-width:720px){.nav{padding:18px 20px;flex-wrap:wrap}.hero{padding:80px 24px 60px}.stats{grid-template-columns:1fr;padding:0 20px 70px}.showcase{padding:0 20px 90px}.chapter{padding:60px 24px}.split{grid-template-columns:1fr}.panel-grid{grid-template-columns:1fr}.milestone-grid{grid-template-columns:1fr}.signal-rail{display:none}.disc-grid{grid-template-columns:repeat(3,1fr)}.img-pair{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="signal-rail" id="rail"></div>
+<nav class="nav">
+  <a href="index.html" class="logo">GAME.TV</a>
+  <span class="nav-x">×</span>
+  <span class="nav-name">Alessandro</span>
+  <span class="nav-flags">
+    <a href="#" class="flag" data-lang="en" title="English">🇬🇧</a>
+    <a href="#" class="flag" data-lang="es" title="Traducir al español">🇪🇸</a>
+    <a href="#" class="flag" data-lang="it" title="Traduci in italiano">🇮🇹</a>
+  </span>
+  <span class="nav-spacer"></span>
+  <a href="index.html" class="nav-back">← Choose a different case</a>
+</nav>
+
+<section class="hero">
+  <span class="eyebrow">Game.tv</span>
+  <h1>Three Gaming Audiences.<br>One <span class="hl">signal</span> worth building for.</h1>
+  <p>An AI matchmaking bot on Discord, backed by $25M, inside a 500M-user platform. The question wasn't which features to build. It was which audience's behavior to trust.</p>
+</section>
+<div class="connector-video">
+  <div class="video-frame">
+    <iframe src="https://www.youtube.com/embed/inYJODlxG-E?autoplay=1&mute=1&loop=1&playlist=inYJODlxG-E&controls=1&rel=0" title="Game.tv overview video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>
+  </div>
+</div>
+<section class="stats">
+  <div class="stat"><div class="stat-num">4M</div><div class="stat-label">App Installs — 10 Months</div></div>
+  <div class="stat"><div class="stat-num">22M</div><div class="stat-label">Esport Tournament Joins</div></div>
+  <div class="stat"><div class="stat-num">420K+</div><div class="stat-label">Weekly League Gamers</div></div>
+</section>
+
+<section class="showcase">
+  <div class="showcase-head">
+    <span class="kicker">Case Study Rubric</span>
+    <h2>Four things to score.</h2>
+  </div>
+  <div class="showcase-grid">
+    <a href="#s1" class="showcase-card"><span class="num">01</span><h3>Business Problem</h3><p>Three audiences, one budget, and the fork.</p><span class="go">Read chapter →</span></a>
+    <a href="#s2" class="showcase-card"><span class="num">02</span><h3>Methodology & Rationale</h3><p>Three panels, an AI bot, and a continuous loop.</p><span class="go">Read chapter →</span></a>
+    <a href="#s3" class="showcase-card"><span class="num">03</span><h3>Key Trade-offs</h3><p>What got prioritized, what got sequenced, what shipped.</p><span class="go">Read chapter →</span></a>
+    <a href="#s4" class="showcase-card"><span class="num">04</span><h3>In Hindsight</h3><p>What this reveals, and the honest gap still open.</p><span class="go">Read chapter →</span></a>
+  </div>
+</section>
+
+<!-- CH 1 — BUSINESS PROBLEM -->
+<section class="chapter" id="s1">
+  <div class="chapter-eyebrow"><span class="chapter-num">01</span><span class="chapter-dim">Business Problem</span></div>
+  <h2>Which audience's want do you ignore?</h2>
+  <p>The bot matched esports players for prizes. Small scale, working. The question: could it become a real consumer app?</p>
+  <p>Three audiences existed, and they didn't want the same thing:</p>
+  <p><strong>BlueStacks' desktop base</strong> · <strong>Microtransaction-obsessed gamers</strong> · <strong>Influencers & content creators</strong></p>
+  <p>Build for the loudest one, burn the $25M raise. Miss the real signal, no app at all.</p>
+</section>
+
+<!-- CH 2 — METHODOLOGY & RATIONALE -->
+<section class="chapter" id="s2">
+  <div class="chapter-eyebrow"><span class="chapter-num">02</span><span class="chapter-dim">Methodology & Rationale</span></div>
+  <h2>What they asked for vs. what made them stay.</h2>
+  <p class="lead">Three panels. One goal: what makes them stay, not what they say they want.</p>
+  <div class="panel-grid">
+    <div class="panel-card"><span class="p-icon">🖥️</span><div class="p-num">Panel 01</div><h4>BlueStacks Desktop Base</h4><p>Could a mobile-first esports product extend their existing habit rather than compete with it?</p></div>
+    <div class="panel-card"><span class="p-icon">💰</span><div class="p-num">Panel 02</div><h4>Microtransaction Gamers</h4><p>The louder ask — deeper IAP features — but not the one that predicted retention or virality.</p></div>
+    <div class="panel-card"><span class="p-icon">🎥</span><div class="p-num">Panel 03</div><h4>Influencers & Creators</h4><p>The distribution layer. What made a creator actually stream wasn't what they asked for.</p></div>
+  </div>
+  <div class="split">
+    <div class="split-col no"><h4>Didn't Build For</h4><ul><li>The loudest feature requests</li><li>Deeper IAP mechanics alone</li><li>A generic mobile gaming app</li></ul></div>
+    <div class="split-col yes"><h4>Built Instead</h4><ul><li>Esports tournament format with real prizes</li><li>Creator-driven content distribution loop</li><li>A bridge from Discord habit to a real app</li></ul></div>
+  </div>
+
+  <p class="lead" style="margin-top:36px">The AI matchmaking bot: a continuous intelligence system, not a one-off sprint.</p>
+  <div class="arch">
+    <div class="arch-track">
+      <span class="box">Discord Bot (AI)</span><span class="arrow">→</span><span class="box">Matchmaking + Prizes</span><span class="arrow">→</span><span class="box">Panel Feedback</span><span class="arrow">→</span><span class="box">Android / iOS App</span><span class="arrow">→</span>
+      <span class="box">Discord Bot (AI)</span><span class="arrow">→</span><span class="box">Matchmaking + Prizes</span><span class="arrow">→</span><span class="box">Panel Feedback</span><span class="arrow">→</span><span class="box">Android / iOS App</span><span class="arrow">→</span>
+    </div>
+  </div>
+  <p>Every panel round fed directly into what shipped next. The bot wasn't just a product. It was a research instrument generating behavioral data every time someone used it.</p>
+
+  <div class="video-embed">
+    <span class="video-embed-label">The AI bot in action — live product demo</span>
+    <iframe width="315" height="560" src="https://www.youtube.com/embed/ZyGC-xY-Z6w" title="Game.tv AI Bot Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <div class="img-row">
+    <span class="img-row-label">Pre-App — Discord Bot Era</span>
+    <div class="img-pair">
+      <img src="https://cdn.game.tv/images/meet-tourney/dock-images/pasted%20image%200(1).png" alt="Game.tv Discord bot matchmaking">
+      <img src="https://cdn.game.tv/images/meet-tourney/dock-images/pasted%20image%200(2).png" alt="Game.tv Discord bot tournament flow">
+    </div>
+  </div>
+  <div class="img-row">
+    <span class="img-row-label">Post-App — iOS / Android Era</span>
+    <div class="img-pair">
+      <img src="https://imag.malavida.com/mvimgbig/download-fs/game-tv-31723-9.jpg" alt="Game.tv native app">
+      <img src="https://gadget.co.za/wp-content/uploads/2021/02/game.tv_.png" alt="Game.tv app branding">
+    </div>
+  </div>
+
+  <div class="team-strip">
+    <span class="t-label">Cross-functional, not solo</span>
+    <div class="web-wrap">
+      <svg viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+        <polygon class="web-edge" points="150,40 254.6,116 214.7,239 85.3,239 45.4,116"/>
+        <line class="web-spoke" x1="150" y1="150" x2="150" y2="40"/>
+        <line class="web-spoke" x1="150" y1="150" x2="254.6" y2="116"/>
+        <line class="web-spoke" x1="150" y1="150" x2="214.7" y2="239"/>
+        <line class="web-spoke" x1="150" y1="150" x2="85.3" y2="239"/>
+        <line class="web-spoke" x1="150" y1="150" x2="45.4" y2="116"/>
+        <circle class="web-hub" cx="150" cy="150" r="7"/>
+        <circle class="web-dot" cx="150" cy="40" r="5"/>
+        <circle class="web-dot" cx="254.6" cy="116" r="5"/>
+        <circle class="web-dot" cx="214.7" cy="239" r="5"/>
+        <circle class="web-dot" cx="85.3" cy="239" r="5"/>
+        <circle class="web-dot" cx="45.4" cy="116" r="5"/>
+      </svg>
+      <div class="web-node" style="left:50%;top:13.3%"><span>Marketing Operations</span></div>
+      <div class="web-node" style="left:84.9%;top:38.7%"><span>Paid Media</span></div>
+      <div class="web-node" style="left:71.6%;top:79.7%"><span>Research &amp; UX Design</span></div>
+      <div class="web-node" style="left:28.4%;top:79.7%"><span>Partnerships</span></div>
+      <div class="web-node" style="left:15.1%;top:38.7%"><span>Community Support</span></div>
+    </div>
+  </div>
+
+  <div class="team-strip">
+    <span class="t-label">Methodologies applied</span>
+    <div class="team-tags">
+      <span>Concept & Feature Testing</span>
+      <span>Player Journey Mapping</span>
+      <span>Market Sizing (TAM/SAM)</span>
+      <span>Predictive Analytics</span>
+      <span>Big Data (Behavioral)</span>
+    </div>
+  </div>
+</section>
+
+<!-- CH 3 — KEY TRADE-OFFS -->
+<section class="chapter" id="s3">
+  <div class="chapter-eyebrow"><span class="chapter-num">03</span><span class="chapter-dim">Key Trade-offs</span></div>
+  <h2>Growth first. Extraction second.</h2>
+  <div class="fail-block">
+    <h4>What the loudest signal got wrong</h4>
+    <p>Monetization-first roadmap, before an audience existed to monetize.</p>
+    <h4 style="margin-top:16px">What changed</h4>
+    <p>Creator and tournament signal got prioritized. Monetization depth got sequenced for after retention was proven.</p>
+  </div>
+  <p class="lead">Acted on. The bot became an app. The niche became a growth engine.</p>
+  <div class="badges">
+    <span class="badge">$25M Raised — Game.tv</span>
+    <span class="badge">500M Users — BlueStacks Platform</span>
+  </div>
+  <div class="milestone-grid">
+    <div class="milestone"><span class="m-icon">📲</span><div class="m-num">4M</div><div class="m-label">App Installs in 10 Months</div></div>
+    <div class="milestone"><span class="m-icon">🎮</span><div class="m-num">22M</div><div class="m-label">Gamers Joined Esport Tournaments</div></div>
+    <div class="milestone"><span class="m-icon">🏆</span><div class="m-num">420K+</div><div class="m-label">Weekly League Gamers, 10 Months</div></div>
+    <div class="milestone"><span class="m-icon">📽️</span><div class="m-num">3,000+</div><div class="m-label">Ad Videos — 4M+ Views, 2 Years</div></div>
+    <div class="milestone"><span class="m-icon">🌱</span><div class="m-num">60K+</div><div class="m-label">Community Built From Zero</div></div>
+    <div class="milestone"><span class="m-icon">🤖</span><div class="m-num">2</div><div class="m-label">Platforms in Parallel — Bot & App</div></div>
+  </div>
+
+  <div class="discovery">
+    <span class="discovery-label">A discovery, not a plan — surfaced from users after launch</span>
+    <div class="disc-grid">
+      <div class="disc-step">
+        <span class="d-icon">🏆</span><div class="d-num">01</div><h5>Host Tournaments</h5>
+        <div class="disc-tip">
+          <span class="tip-label">What it does</span>
+          <p>Create or join real-money and free-to-play tournaments across 300+ titles, matched in real time. A tournament went live every 60 seconds at peak.</p>
+          <span class="tip-label">How we got here</span>
+          <p>The original ask, validated across all three panels from day one. Nobody disagreed this was the core loop.</p>
+        </div>
+      </div>
+      <div class="disc-step">
+        <span class="d-icon">🔴</span><div class="d-num">02</div><h5>Create Live Stream</h5>
+        <div class="disc-tip">
+          <span class="tip-label">What it does</span>
+          <p>Go live with built-in editing, emoji reactions, and mini-games so fans stay engaged during a match, not just after it.</p>
+          <span class="tip-label">How we got here</span>
+          <p>Creators told us clip-sharing wasn't enough. Their audience was already showing up live for tournaments, and we built the stage where they already stood.</p>
+        </div>
+      </div>
+      <div class="disc-step">
+        <span class="d-icon">🎬</span><div class="d-num">03</div><h5>Upload Short Video</h5>
+        <div class="disc-tip">
+          <span class="tip-label">What it does</span>
+          <p>Post highlight clips, memes, and match moments to a dedicated feed inside the app.</p>
+          <span class="tip-label">How we got here</span>
+          <p>Surfaced from behavioral data: players were screen-recording wins and sharing them off-platform. We brought that habit in-house instead of losing it.</p>
+        </div>
+      </div>
+      <div class="disc-step">
+        <span class="d-icon">💬</span><div class="d-num">04</div><h5>Chat With Fans</h5>
+        <div class="disc-tip">
+          <span class="tip-label">What it does</span>
+          <p>Dedicated chat rooms and live calls: jokes, memes, strategy talk, all without leaving the app.</p>
+          <span class="tip-label">How we got here</span>
+          <p>One-on-one conversations kept surfacing the same want: a place to talk to fans that wasn't buried in a separate Discord server.</p>
+        </div>
+      </div>
+      <div class="disc-step">
+        <span class="d-icon">🎟️</span><div class="d-num">05</div><h5>Monetize With Fan Pass</h5>
+        <div class="disc-tip">
+          <span class="tip-label">What it does</span>
+          <p>Daily, weekly, or monthly fan subscriptions unlocking exclusive tournaments, badges, and perks, sold directly to a creator's followers.</p>
+          <span class="tip-label">How we got here</span>
+          <p>The clearest signal of all: players were already asking how to make money from the audience they'd built. This answered it directly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CH 4 — IN HINDSIGHT -->
+<section class="chapter" id="s4">
+  <div class="chapter-eyebrow"><span class="chapter-num">04</span><span class="chapter-dim">In Hindsight</span></div>
+  <h2>Stated preference isn't signal. Behavior is.</h2>
+  <p class="lead">Most intelligence candidates run the panels, write the findings, hand over the deck.</p>
+  <p>I stayed in the loop until the intelligence changed what actually shipped, then stayed long enough to catch a second signal nobody asked about. The creator-monetization evolution wasn't in any panel's feedback. It came from watching what users <strong>did</strong> after we gave them tournaments.</p>
+  <p><strong>I don't hand off intelligence and walk away. I stay in the loop until it actually changes what ships.</strong></p>
+  <div class="fail-block-alt">
+    <h4>The honest gap</h4>
+    <p>When I overrode Panel 2's signal, I couldn't quantify how wrong it was. I couldn't say "this panel predicts 15% of retention variance vs 60% from Panel 3." I just knew from pattern-matching. That works when you're close to the product. It doesn't scale to 13 markets with a Director of Research asking you to show your work. That's the gap, and it's the specific reason a structured intelligence function exists.</p>
+  </div>
+</section>
+
+<section class="close">
+  <p>The loudest audience isn't always the right one.</p>
+  <p class="final">Knowing which one to build for is the job.</p>
+</section>
+
+<footer class="footer">
+  <span>© Case Study — Alessandro Capezza</span>
+  <a href="index.html">← Back to case selection</a>
+</footer>
+
+<script>
+const chapters=document.querySelectorAll('.chapter');
+const rail=document.getElementById('rail');
+const dots=[];
+function buildDots(){dots.length=0;document.querySelectorAll('.signal-dot').forEach(d=>d.remove());chapters.forEach(ch=>{const dot=document.createElement('div');dot.className='signal-dot';rail.appendChild(dot);dots.push({el:dot,chapter:ch})});positionDots()}
+function positionDots(){dots.forEach(({el,chapter})=>{const r=chapter.getBoundingClientRect();el.style.top=(r.top+window.scrollY+r.height*0.15)+'px'})}
+function updateLit(){const mid=window.scrollY+window.innerHeight*0.4;let a=-1;chapters.forEach((c,i)=>{if(mid>=c.offsetTop)a=i});dots.forEach(({el},i)=>{el.classList.toggle('lit',i<=a)})}
+window.addEventListener('load',()=>{buildDots();updateLit()});
+window.addEventListener('resize',()=>{positionDots();updateLit()});
+window.addEventListener('scroll',updateLit);
+
+function setupReveal(){
+  const items=document.querySelectorAll('.stats .stat, .milestone-grid .milestone, .disc-grid .disc-step');
+  items.forEach((el,i)=>{el.classList.add('reveal');el.style.transitionDelay=(i%6)*0.08+'s';});
+  const obs=new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){entry.target.classList.add('visible');obs.unobserve(entry.target);}
+    });
+  },{threshold:0.15});
+  items.forEach(el=>obs.observe(el));
+}
+window.addEventListener('load',setupReveal);
+
+document.querySelectorAll('.nav-flags .flag').forEach(function(a){
+  a.addEventListener('click', function(e){
+    e.preventDefault();
+    const lang=this.dataset.lang;
+    if(lang==='en'){
+      const params=new URLSearchParams(location.search);
+      const orig=params.get('u');
+      if(orig){ location.href=orig; }
+      return;
+    }
+    location.href='https://translate.google.com/translate?sl=en&tl='+lang+'&u='+encodeURIComponent(location.href);
+  });
+});
+</script>
+</body>
+</html>
