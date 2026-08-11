@@ -101,6 +101,12 @@
         .case-stat span{display:block;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;font-weight:400;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
         
         /* Video Placeholders */
+        .case-card-link{color:inherit;text-decoration:none;cursor:pointer;transition:background 0.25s ease;position:relative;}
+        .case-card-link:hover{background:rgba(159,232,112,0.06);}
+        .case-card-link:hover .case-title{color:var(--green-deep);}
+        .case-card-link::after{content:'View case →';position:absolute;top:1rem;right:1rem;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green-deep);background:var(--green);padding:0.3rem 0.6rem;border-radius:2px;opacity:0;transition:opacity 0.25s ease;pointer-events:none;}
+        .case-card-link:hover::after{opacity:1;}
+        @media (max-width:767px){.case-card-link::after{opacity:1;top:0.5rem;right:0.5rem;font-size:0.5rem;}}
         .case-video-wide{width:100%;height:280px;margin-bottom:1.5rem;border-radius:8px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;}
         @media (max-width:767px){.case-video-wide{height:240px;}}
         .case-video-wide video{width:100%;height:100%;object-fit:cover;}
@@ -263,8 +269,59 @@
             </div>
             <h3 class="case-title">Qubit Wallet — GTM From Scratch</h3>
             <p class="case-desc">Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships.</p>
-            <div class="case-stat">500+<span>Beta testers ┬╖ 54% community growth</span></div>
+            <div class="case-stat">500+<span>Beta testers · 54% community growth</span></div>
         </div>
+
+        <!-- CASE 7: Game.tv — Full Case Study -->
+        <a class="case-card case-card-link" href="game-tv.html">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Case Study</span>
+                <span class="case-tag">AI Bot</span>
+                <span class="case-tag">Product Intelligence</span>
+            </div>
+            <h3 class="case-title">Game.tv — Full Case Study</h3>
+            <p class="case-desc">Deep-dive on the AI matchmaking bot backed by $25M: three conflicting audiences, one continuous intelligence loop, and the signal that turned a Discord bot into a 4M-install app.</p>
+            <div class="case-stat">4M<span>installs · 22M tournament joins</span></div>
+        </a>
+
+        <!-- CASE 8: AI Video Production — Sustainable Construction -->
+        <a class="case-card case-card-link" href="terra-solida.html">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/genlayer-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI Video</span>
+                <span class="case-tag">Sustainability</span>
+                <span class="case-tag">Content Production</span>
+            </div>
+            <h3 class="case-title">AI Video Production — Sustainable Construction</h3>
+            <p class="case-desc">Produced AI-generated video ads and content for a company in the sustainable flooring and eco-friendly construction sector — designed for website, social channels, and live conference presentations.</p>
+            <div class="case-stat">Belvedere<span>Colosseo shoot · production moodboard</span></div>
+        </a>
+
+        <!-- CASE 9: Six-Agent GTM Workflow — Fintech Workforce -->
+        <a class="case-card case-card-link" href="papaya.html">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI Agents</span>
+                <span class="case-tag">GTM</span>
+                <span class="case-tag">Fintech</span>
+            </div>
+            <h3 class="case-title">Six-Agent GTM Workflow — Fintech Workforce Platform</h3>
+            <p class="case-desc">Built a six-agent workflow system grounded in a shared context layer for a financial technology and workforce management platform: 01 Signal → 02 Source → 03 Enrichment → 04 Score → 05 Outreach → 06 Coach.</p>
+            <div class="case-stat">6<span>agents · shared context layer</span></div>
+        </a>
     </div>
 </section>
 
