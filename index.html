@@ -283,7 +283,9 @@
         <!-- CASE 8: AI Video Production — Sustainable Construction -->
         <a class="case-card case-card-link" id="case-ecoconstruction" href="Eco-friendly-construction.html">
             <div class="case-video-wide">
-                <img src="terra-solida-mockup.svg" alt="Sustainable construction AI video moodboard mockup" loading="lazy">
+                <video class="lazy-video" muted loop playsinline preload="none" poster="terra-solida-mockup.svg" aria-label="Sustainable construction AI video preview">
+                    <source data-src="https://raw.githubusercontent.com/alexnomads/alexnomads-online-curriculum/main/terrasolida.mp4" type="video/mp4">
+                </video>
             </div>
             <div class="case-meta">
                 <span class="case-tag">AI Video</span>
@@ -374,5 +376,33 @@
   </div>
 </footer>
 
+<script>
+  // Lazy-load heavy video banners only when they scroll near the viewport,
+  // so they don't compete with initial page load.
+  document.addEventListener('DOMContentLoaded', function () {
+    var lazyVideos = document.querySelectorAll('video.lazy-video');
+    if (!('IntersectionObserver' in window)) {
+      lazyVideos.forEach(function (video) {
+        var source = video.querySelector('source[data-src]');
+        if (source) { source.src = source.dataset.src; video.load(); }
+      });
+      return;
+    }
+    var observer = new IntersectionObserver(function (entries, obs) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) return;
+        var video = entry.target;
+        var source = video.querySelector('source[data-src]');
+        if (source && !source.src) {
+          source.src = source.dataset.src;
+          video.load();
+          video.play().catch(function () {});
+        }
+        obs.unobserve(video);
+      });
+    }, { rootMargin: '200px 0px' });
+    lazyVideos.forEach(function (video) { observer.observe(video); });
+  });
+</script>
 </body>
 </html>
