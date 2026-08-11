@@ -6,7 +6,7 @@
     <title>Alessandro - GTM AI Orchestrator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Instrument+Sans:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700;1,9..144,900&family=Instrument+Sans:wght@400;500&family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
         :root{--white:#f8f6f1;--black:#0d0c0a;--green:#9fe870;--green-deep:#163300;--forest:#1a3d00;--muted:#7a7670;--border:rgba(13,12,10,0.1);}
         *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
@@ -45,7 +45,28 @@
         @media (min-width:768px){.hero-aside{max-width:680px;}}
         .hero-aside p{font-size:1rem;line-height:1.55;color:rgba(248,246,241,0.6);}
         @media (min-width:768px){.hero-aside p{font-size:1.8rem;line-height:1.5;color:rgba(248,246,241,0.5);}}
-        
+
+        /* Gaming-style CTA button */
+        @keyframes ctaFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+        .cta-game-btn{
+            align-self:flex-start;
+            display:inline-flex;align-items:center;justify-content:center;
+            font-family:'Press Start 2P',cursive;
+            font-size:0.7rem;line-height:1.4;letter-spacing:0.02em;
+            text-transform:uppercase;text-decoration:none;
+            color:var(--black);background:var(--green);
+            padding:1rem 1.5rem;border-radius:8px;
+            border:3px solid var(--green-deep);
+            box-shadow:0 6px 0 var(--green-deep);
+            animation:ctaFloat 1.8s ease-in-out infinite;
+            transition:transform 0.15s ease,box-shadow 0.15s ease;
+            cursor:pointer;
+        }
+        .cta-game-btn:hover{animation-play-state:paused;transform:translateY(3px);box-shadow:0 3px 0 var(--green-deep);}
+        .cta-game-btn:active{animation-play-state:paused;transform:translateY(6px);box-shadow:0 0 0 var(--green-deep);}
+        @media (max-width:767px){.cta-game-btn{align-self:center;font-size:0.62rem;padding:0.9rem 1.25rem;}}
+        @media (prefers-reduced-motion:reduce){.cta-game-btn{animation:none;}}
+
         /* Hero Portrait */
         .hero-portrait{position:relative;overflow:hidden;}
         @media (min-width:768px){.hero-portrait{grid-column:2/-1;grid-row:1/-1;}}
@@ -171,6 +192,7 @@
             <p>I treat marketing like an engineering problem. I've spent years building products & GTM systems at the edge of where tech was going next: AI agents before most companies had a strategy for them, Web3 before it was mainstream.</p>
             
             <div style="display:flex;flex-direction:column;gap:1rem;">
+                <a href="#case-fintech" class="cta-game-btn">Check Case Histories</a>
             </div>
         </div>
     </div>
