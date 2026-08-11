@@ -129,6 +129,27 @@
         @media (min-width:768px){.case-stat-item{font-size:2rem;}}
         .case-stat-item span{display:block;font-family:'Instrument Sans',sans-serif;font-size:0.6rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;line-height:1.4;}
 
+        /* Standalone (non-wrapped) case CTA buttons, e.g. cards that open the popup */
+        .case-cta-btn-active{pointer-events:auto;cursor:pointer;font:inherit;font-family:'Press Start 2P',cursive;}
+        .case-cta-btn-active:hover{transform:translateY(2px);box-shadow:0 2px 0 var(--green-deep);}
+        .case-cta-btn-active:active{transform:translateY(4px);box-shadow:0 0 0 var(--green-deep);}
+
+        /* Case popup modal */
+        .case-modal-overlay{position:fixed;inset:0;background:rgba(13,12,10,0.75);backdrop-filter:blur(4px);z-index:1000;display:flex;align-items:center;justify-content:center;padding:1.5rem;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease;}
+        .case-modal-overlay.active{opacity:1;visibility:visible;}
+        .case-modal{background:var(--white);border-radius:12px;width:100%;max-width:1000px;height:min(85vh,800px);display:flex;flex-direction:column;overflow:hidden;transform:translateY(16px) scale(0.98);transition:transform 0.3s cubic-bezier(0.16,1,0.3,1);}
+        .case-modal-overlay.active .case-modal{transform:translateY(0) scale(1);}
+        .case-modal-header{display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border-bottom:1px solid var(--border);flex-shrink:0;}
+        .case-modal-title{font-family:'Fraunces',serif;font-weight:700;font-size:1rem;letter-spacing:-0.01em;}
+        .case-modal-actions{display:flex;align-items:center;gap:0.75rem;flex-shrink:0;}
+        .case-modal-openlink{font-size:0.68rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--green-deep);text-decoration:none;border:1px solid var(--green);background:var(--green);padding:0.5rem 0.8rem;border-radius:4px;white-space:nowrap;}
+        .case-modal-openlink:hover{filter:brightness(1.05);}
+        .case-modal-close{width:36px;height:36px;border-radius:50%;border:1px solid rgba(13,12,10,0.3);background:none;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;color:var(--black);flex-shrink:0;transition:background 0.2s;}
+        .case-modal-close:hover{background:rgba(13,12,10,0.08);}
+        .case-modal-body{flex:1;position:relative;background:#f0f0f0;}
+        .case-modal-body iframe{width:100%;height:100%;border:0;display:block;}
+        @media (max-width:640px){.case-modal-title{font-size:0.85rem;}.case-modal-openlink{font-size:0.6rem;padding:0.45rem 0.65rem;}}
+
         /* Video Placeholders */
         .case-card-link{color:inherit;text-decoration:none;cursor:pointer;transition:background 0.25s ease;position:relative;}
         .case-card-link:hover{background:rgba(159,232,112,0.06);}
@@ -230,6 +251,23 @@
     </div>
 
     <div class="cases-grid">
+        <!-- CASE 1: LandVault -->
+        <div class="case-card" id="case-landvault">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Series B</span>
+                <span class="case-tag">Marketing Team Building</span>
+                <span class="case-tag">Partnerships</span>
+            </div>
+            <h3 class="case-title">LandVault — From Series A to Series B + Rebrand</h3>
+            <p class="case-desc">Built 30+ partnerships (Mastercard, Heineken & more), hired, led & trained marketing team, led rebrand following $25M Series B and built a product from scratch. LandVault eventually was sold for $450M & rebranded as Napster.</p>
+            <div class="case-stat">$25M<span>Series B 30+ partnerships</span></div>
+        </div>
+
         <!-- CASE 9: Six-Agent GTM Workflow — Fintech Workforce -->
         <a class="case-card case-card-link" id="case-fintech" href="fintech-agent.html">
             <div class="case-video-wide">
@@ -247,6 +285,42 @@
             <div class="case-stat">6<span>agents · shared context layer</span></div>
             <span class="case-cta-btn">Check Case History</span>
         </a>
+
+        <!-- CASE 7: Game.tv — Full Case Study -->
+        <a class="case-card case-card-link" id="case-gametv" href="game-tv.html">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">Case Study</span>
+                <span class="case-tag">AI Bot</span>
+                <span class="case-tag">Product Intelligence</span>
+            </div>
+            <h3 class="case-title">Game.tv — Full Case Study</h3>
+            <p class="case-desc">Deep-dive on the AI matchmaking bot backed by $25M: three conflicting audiences, one continuous intelligence loop, and the signal that turned a Discord bot into a 4M-install app.</p>
+            <div class="case-stat">4M<span>installs · 22M tournament joins</span></div>
+            <span class="case-cta-btn">Check Case History</span>
+        </a>
+
+         <!-- CASE 2: Rose of Jericho -->
+        <div class="case-card" id="case-roj">
+            <div class="case-video-wide">
+                <video autoplay muted loop playsinline>
+                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI</span>
+                <span class="case-tag">Web3</span>
+                <span class="case-tag">Product</span>
+            </div>
+            <h3 class="case-title">Rose of Jericho — Fouder of AI Wellness App</h3>
+            <p class="case-desc">Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Startup grant and Soonami hackathon.</p>
+            <div class="case-stat">18h+<span>Avg session time · Startup grant</span></div>
+            <button type="button" class="case-cta-btn case-cta-btn-active" onclick="openCaseModal('https://roseofjericho.xyz/', 'Rose of Jericho — Founder of AI Wellness App')">Check Case History</button>
+        </div>
 
         <!-- CASE 10: Combat Sport Analytics & Sentiment Dashboard -->
         <div class="case-card" id="case-combatanalytics">
@@ -266,6 +340,7 @@
                 <div class="case-stat-item">3+<span>Combat sports tracked · Wrestling, UFC, MMA</span></div>
                 <div class="case-stat-item">MVP<span>Content · Merch · KOL Outreach</span></div>
             </div>
+            <button type="button" class="case-cta-btn case-cta-btn-active" onclick="openCaseModal('https://wrestlingmindgames.xyz/', 'Combat Sport Analytics & Sentiment Dashboard')">Check Case History</button>
         </div>
 
         <!-- CASE 11: AI-Powered Prediction Market Debates -->
@@ -286,40 +361,7 @@
                 <div class="case-stat-item">3<span>AI Agents Debating Per Forecast</span></div>
                 <div class="case-stat-item">Venice AI<span>Hackathon Project</span></div>
             </div>
-        </div>
-
-        <!-- CASE 1: LandVault -->
-        <div class="case-card" id="case-landvault">
-            <div class="case-video-wide">
-                <video autoplay muted loop playsinline>
-                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="case-meta">
-                <span class="case-tag">Series B</span>
-                <span class="case-tag">Marketing Team Building</span>
-                <span class="case-tag">Partnerships</span>
-            </div>
-            <h3 class="case-title">LandVault — From Series A to Series B + Rebrand</h3>
-            <p class="case-desc">Built 30+ partnerships (Mastercard, Heineken & more), hired, led & trained marketing team, led rebrand following $25M Series B and built a product from scratch. LandVault eventually was sold for $450M & rebranded as Napster.</p>
-            <div class="case-stat">$25M<span>Series B 30+ partnerships</span></div>
-        </div>
-
-         <!-- CASE 2: Rose of Jericho -->
-        <div class="case-card" id="case-roj">
-            <div class="case-video-wide">
-                <video autoplay muted loop playsinline>
-                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="case-meta">
-                <span class="case-tag">AI</span>
-                <span class="case-tag">Web3</span>
-                <span class="case-tag">Product</span>
-            </div>
-            <h3 class="case-title">Rose of Jericho — Fouder of AI Wellness App</h3>
-            <p class="case-desc">Built MVP combining AI personalisation, onchain rewards, and N8N agent workflows. Won Startup grant and Soonami hackathon.</p>
-            <div class="case-stat">18h+<span>Avg session time · Startup grant</span></div>
+            <button type="button" class="case-cta-btn case-cta-btn-active" onclick="openCaseModal('https://www.hackquest.io/projects/Oracle-Arena', 'AI-Powered Prediction Market Debates')">Check Case History</button>
         </div>
 
         <!-- CASE 3: GenLayer -->
@@ -371,24 +413,6 @@
             <p class="case-desc">Crafted GTM & brand identity from scratch, secured 500 Beta testers, reached 8.4% engagement rate, 54% community growth, secured partnerships.</p>
             <div class="case-stat">500+<span>Beta testers · 54% community growth</span></div>
         </div>
-
-        <!-- CASE 7: Game.tv — Full Case Study -->
-        <a class="case-card case-card-link" id="case-gametv" href="game-tv.html">
-            <div class="case-video-wide">
-                <video autoplay muted loop playsinline>
-                    <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/gametv-video.mp4" type="video/mp4">
-                </video>
-            </div>
-            <div class="case-meta">
-                <span class="case-tag">Case Study</span>
-                <span class="case-tag">AI Bot</span>
-                <span class="case-tag">Product Intelligence</span>
-            </div>
-            <h3 class="case-title">Game.tv — Full Case Study</h3>
-            <p class="case-desc">Deep-dive on the AI matchmaking bot backed by $25M: three conflicting audiences, one continuous intelligence loop, and the signal that turned a Discord bot into a 4M-install app.</p>
-            <div class="case-stat">4M<span>installs · 22M tournament joins</span></div>
-            <span class="case-cta-btn">Check Case History</span>
-        </a>
 
         <!-- CASE 8: AI Video Production — Sustainable Construction -->
         <a class="case-card case-card-link" id="case-ecoconstruction" href="Eco-friendly-construction.html">
@@ -495,6 +519,22 @@
   </div>
 </footer>
 
+<!-- Case popup modal (shows an external case-history link without leaving the site) -->
+<div class="case-modal-overlay" id="case-modal-overlay">
+  <div class="case-modal">
+    <div class="case-modal-header">
+      <span class="case-modal-title" id="case-modal-title"></span>
+      <div class="case-modal-actions">
+        <a id="case-modal-openlink" href="#" target="_blank" rel="noopener">Open in new tab ↗</a>
+        <button type="button" class="case-modal-close" id="case-modal-close" aria-label="Close">✕</button>
+      </div>
+    </div>
+    <div class="case-modal-body">
+      <iframe id="case-modal-iframe" src="" title="Case history preview" loading="lazy"></iframe>
+    </div>
+  </div>
+</div>
+
 <script>
   // Lazy-load heavy video banners only when they scroll near the viewport,
   // so they don't compete with initial page load.
@@ -523,6 +563,38 @@
     }, { rootMargin: '200px 0px' });
     lazyVideos.forEach(function (video) { observer.observe(video); });
   });
+</script>
+
+<script>
+  // Case popup modal
+  (function () {
+    var overlay = document.getElementById('case-modal-overlay');
+    var iframe = document.getElementById('case-modal-iframe');
+    var titleEl = document.getElementById('case-modal-title');
+    var openLink = document.getElementById('case-modal-openlink');
+    var closeBtn = document.getElementById('case-modal-close');
+    if (!overlay) return;
+
+    window.openCaseModal = function (url, title) {
+      titleEl.textContent = title || '';
+      openLink.href = url;
+      iframe.src = url;
+      overlay.classList.add('active');
+      document.body.style.overflow = 'hidden';
+    };
+    function closeCaseModal() {
+      overlay.classList.remove('active');
+      document.body.style.overflow = '';
+      iframe.src = '';
+    }
+    closeBtn.addEventListener('click', closeCaseModal);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeCaseModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') closeCaseModal();
+    });
+  })();
 </script>
 </body>
 </html>
