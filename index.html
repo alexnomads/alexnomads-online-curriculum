@@ -109,6 +109,20 @@
         .case-card-link::after{content:'View case →';position:absolute;top:1rem;right:1rem;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--green-deep);background:var(--green);padding:0.3rem 0.6rem;border-radius:2px;opacity:0;transition:opacity 0.25s ease;pointer-events:none;}
         .case-card-link:hover::after{opacity:1;}
         @media (max-width:767px){.case-card-link::after{opacity:1;top:0.5rem;right:0.5rem;font-size:0.5rem;}}
+
+        /* Instagram Carousel */
+        .insta-section{padding:4rem 1.5rem;border-top:1px solid var(--border);}
+        @media (min-width:768px){.insta-section{padding:6rem 3.5rem;}}
+        .insta-header{display:flex;align-items:flex-end;justify-content:space-between;gap:1.5rem;flex-wrap:wrap;margin-bottom:2rem;max-width:1200px;margin-left:auto;margin-right:auto;}
+        .insta-label{font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;display:block;}
+        .insta-title{font-family:'Fraunces',serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;line-height:1;letter-spacing:-0.03em;}
+        .insta-nav{display:flex;gap:0.6rem;flex-shrink:0;}
+        .insta-nav button{width:42px;height:42px;border-radius:50%;border:1px solid rgba(13,12,10,0.4);background:none;color:var(--black);cursor:pointer;font-size:1rem;display:flex;align-items:center;justify-content:center;transition:background 0.2s,color 0.2s,border-color 0.2s;}
+        .insta-nav button:hover{background:var(--green);border-color:var(--green);color:var(--green-deep);}
+        .insta-carousel{display:flex;gap:1.5rem;overflow-x:auto;scroll-snap-type:x mandatory;max-width:1200px;margin:0 auto;padding-bottom:0.5rem;scrollbar-width:none;}
+        .insta-carousel::-webkit-scrollbar{display:none;}
+        .insta-item{flex:0 0 auto;width:min(360px,84vw);scroll-snap-align:center;}
+        .insta-item .instagram-media{margin:0 !important;width:100% !important;min-width:0 !important;}
         .case-video-wide{width:100%;height:280px;margin-bottom:1.5rem;border-radius:8px;overflow:hidden;background:#f0f0f0;display:flex;align-items:center;justify-content:center;}
         @media (max-width:767px){.case-video-wide{height:240px;}}
         .case-video-wide video,.case-video-wide img{width:100%;height:100%;object-fit:cover;display:block;}
@@ -346,6 +360,47 @@
         </div>
     </div>
 </section>
+
+<!-- Instagram Carousel -->
+<section class="insta-section" id="instagram">
+    <div class="insta-header">
+        <div>
+            <span class="insta-label">Follow Along</span>
+            <h2 class="insta-title">Latest on <em style="color:var(--green-deep);font-style:italic;">Instagram</em></h2>
+        </div>
+        <div class="insta-nav">
+            <button type="button" id="insta-prev" aria-label="Previous post">←</button>
+            <button type="button" id="insta-next" aria-label="Next post">→</button>
+        </div>
+    </div>
+    <div class="insta-carousel" id="insta-carousel">
+        <div class="insta-item">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DYCMCCRK949/" data-instgrm-version="14"></blockquote>
+        </div>
+        <div class="insta-item">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DYhofkXKhq2/" data-instgrm-version="14"></blockquote>
+        </div>
+        <div class="insta-item">
+            <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/p/DaSyKjeKLYB/" data-instgrm-version="14"></blockquote>
+        </div>
+    </div>
+</section>
+<script async src="https://www.instagram.com/embed.js"></script>
+<script>
+  (function () {
+    var carousel = document.getElementById('insta-carousel');
+    var prev = document.getElementById('insta-prev');
+    var next = document.getElementById('insta-next');
+    if (!carousel || !prev || !next) return;
+    function scrollByCard(dir) {
+      var card = carousel.querySelector('.insta-item');
+      var amount = card ? card.getBoundingClientRect().width + 24 : 360;
+      carousel.scrollBy({ left: dir * amount, behavior: 'smooth' });
+    }
+    prev.addEventListener('click', function () { scrollByCard(-1); });
+    next.addEventListener('click', function () { scrollByCard(1); });
+  })();
+</script>
 
 <!-- Footer -->
 <footer>
