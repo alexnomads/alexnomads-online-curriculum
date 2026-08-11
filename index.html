@@ -122,7 +122,13 @@
         .case-stat{font-family:'Fraunces',serif;font-size:2.5rem;font-weight:900;line-height:1;letter-spacing:-0.03em;margin-top:auto;padding-top:1.5rem;}
         @media (min-width:768px){.case-stat{font-size:3rem;padding-top:2rem;}}
         .case-stat span{display:block;font-family:'Instrument Sans',sans-serif;font-size:0.65rem;font-weight:400;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;}
-        
+
+        .case-stat-group{display:flex;gap:1.5rem;margin-top:auto;padding-top:1.5rem;}
+        @media (min-width:768px){.case-stat-group{padding-top:2rem;}}
+        .case-stat-item{flex:1;font-family:'Fraunces',serif;font-size:1.7rem;font-weight:900;line-height:1;letter-spacing:-0.03em;}
+        @media (min-width:768px){.case-stat-item{font-size:2rem;}}
+        .case-stat-item span{display:block;font-family:'Instrument Sans',sans-serif;font-size:0.6rem;font-weight:400;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);margin-top:0.5rem;line-height:1.4;}
+
         /* Video Placeholders */
         .case-card-link{color:inherit;text-decoration:none;cursor:pointer;transition:background 0.25s ease;position:relative;}
         .case-card-link:hover{background:rgba(159,232,112,0.06);}
@@ -256,6 +262,10 @@
             </div>
             <h3 class="case-title">Combat Sport Analytics & Sentiment Dashboard</h3>
             <p class="case-desc">Created a functioning dashboard that analyzes combat sports including Wrestling, UFC, MMA and more. The product was used to produce content, sell merchandising, and do KOL outreach.</p>
+            <div class="case-stat-group">
+                <div class="case-stat-item">3+<span>Combat sports tracked · Wrestling, UFC, MMA</span></div>
+                <div class="case-stat-item">MVP<span>Content · Merch · KOL Outreach</span></div>
+            </div>
         </div>
 
         <!-- CASE 11: AI-Powered Prediction Market Debates -->
@@ -272,6 +282,10 @@
             </div>
             <h3 class="case-title">AI-Powered Prediction Market Debates</h3>
             <p class="case-desc">Created a platform where 3 AI agents debate a prediction outcome, producing more accurate forecasts than any single agent or human trader.</p>
+            <div class="case-stat-group">
+                <div class="case-stat-item">3<span>AI Agents Debating Per Forecast</span></div>
+                <div class="case-stat-item">Venice AI<span>Hackathon Project</span></div>
+            </div>
         </div>
 
         <!-- CASE 1: LandVault -->
