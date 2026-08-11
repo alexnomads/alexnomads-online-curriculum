@@ -17,9 +17,11 @@
         nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3.5rem;background:rgba(248,246,241,0.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);}
         @media (max-width:767px){nav{padding:1rem 1.5rem;}}
         .nav-logo{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;color:var(--black);text-decoration:none;letter-spacing:-0.02em;}
-        .nav-links{display:none;gap:2rem;list-style:none;}
+        .nav-links{display:none;gap:1.4rem;list-style:none;}
         @media (min-width:768px){.nav-links{display:flex;}}
-        .nav-links a{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--black);padding:12px 0;display:inline-block;}
+        .nav-links a{font-size:0.62rem;letter-spacing:0.08em;text-transform:uppercase;text-decoration:none;color:var(--black);padding:12px 0;display:inline-block;white-space:nowrap;opacity:0.75;transition:opacity 0.2s,color 0.2s;}
+        .nav-links a:hover{opacity:1;color:var(--green-deep);}
+        @media (min-width:1100px){.nav-links{gap:2rem;}.nav-links a{font-size:0.68rem;letter-spacing:0.1em;}}
         @media (max-width:767px){.nav-cta{display:none;}}
         .nav-cta{font-size:0.72rem;letter-spacing:0.12em;text-transform:uppercase;text-decoration:none;color:var(--black);border:1px solid rgba(13,12,10,0.4);padding:0.55rem 1.2rem;display:inline-flex;align-items:center;min-height:44px;}
         
@@ -118,6 +120,11 @@
         @media (min-width:768px){.footer-grid{flex-direction:row;justify-content:space-between;align-items:center;text-align:left;}}
         .footer-brand{font-family:'Fraunces',serif;font-size:1.2rem;font-weight:700;}
         .footer-tagline{font-size:0.85rem;color:var(--muted);margin-top:0.25rem;}
+        .footer-links{display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center;}
+        @media (min-width:768px){.footer-links{justify-content:flex-end;}}
+        .footer-link,.footer-email{display:inline-flex;align-items:center;gap:0.4rem;font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:var(--white);text-decoration:none;opacity:0.75;transition:opacity 0.2s,color 0.2s;}
+        .footer-link:hover,.footer-email:hover{opacity:1;color:var(--green);}
+        .footer-link svg,.footer-email svg{width:18px;height:18px;flex-shrink:0;}
     </style>
 </head>
 <body>
@@ -126,9 +133,11 @@
 <nav>
     <a href="#" class="nav-logo">Alessandro S. Capezza</a>
     <ul class="nav-links">
-        <li><a href="#agency">Agency-side Era</a></li>
-        <li><a href="#startup">Startup Era</a></li>
-        <li><a href="#aiagent">AI-Agent Era</a></li>
+        <li><a href="#case-landvault">Web3 · $25M Series B</a></li>
+        <li><a href="#case-roj">AI Wellness · MVP Funded</a></li>
+        <li><a href="game-tv.html">Gaming AI · 4M Installs</a></li>
+        <li><a href="papaya.html">Fintech · AI Agent Workflow</a></li>
+        <li><a href="terra-solida.html">Construction · AI Video</a></li>
     </ul>
 </nav>
 
@@ -171,7 +180,7 @@
 
     <div class="cases-grid">
         <!-- CASE 1: LandVault -->
-        <div class="case-card">
+        <div class="case-card" id="case-landvault">
             <div class="case-video-wide">
                 <video autoplay muted loop playsinline>
                     <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/landvault.mp4" type="video/mp4">
@@ -188,7 +197,7 @@
         </div>
 
          <!-- CASE 2: Rose of Jericho -->
-        <div class="case-card">
+        <div class="case-card" id="case-roj">
             <div class="case-video-wide">
                 <video autoplay muted loop playsinline>
                     <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/roj-video.mp4" type="video/mp4">
@@ -205,7 +214,7 @@
         </div>
 
         <!-- CASE 3: GenLayer -->
-        <div class="case-card">
+        <div class="case-card" id="case-genlayer">
             <div class="case-video-wide">
                 <video autoplay muted loop playsinline>
                     <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/genlayer-video.mp4" type="video/mp4">
@@ -222,7 +231,7 @@
         </div>
 
         <!-- CASE 4: The Sandbox -->
-        <div class="case-card">
+        <div class="case-card" id="case-sandbox">
             <div class="case-video-wide">
                 <video autoplay muted loop playsinline>
                     <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/sandbox-snoopdogg.mp4" type="video/mp4">
@@ -238,7 +247,7 @@
         </div>
 
         <!-- CASE 6: Qubit Wallet -->
-        <div class="case-card">
+        <div class="case-card" id="case-qubit">
             <div class="case-video-wide">
                 <video autoplay muted loop playsinline>
                     <source src="https://raw.githubusercontent.com/alexnomads/coaching-ai/main/assets/qubit-video.mp4" type="video/mp4">
@@ -363,10 +372,6 @@
       </a>
     </div>
   </div>
-</footer>
-            </a>
-        </div>
-    </div>
 </footer>
 
 </body>
