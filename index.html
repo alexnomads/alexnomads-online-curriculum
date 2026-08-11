@@ -179,6 +179,23 @@
     </div>
 
     <div class="cases-grid">
+        <!-- CASE 9: Six-Agent GTM Workflow — Fintech Workforce -->
+        <a class="case-card case-card-link" id="case-fintech" href="fintech-agent.html">
+            <div class="case-video-wide">
+                <video class="lazy-video" autoplay muted loop playsinline preload="none" poster="papaya-mockup.svg" aria-label="Six-agent GTM workflow console preview">
+                    <source data-src="https://raw.githubusercontent.com/alexnomads/alexnomads-online-curriculum/main/gtm-agent-ai-fintech.mov">
+                </video>
+            </div>
+            <div class="case-meta">
+                <span class="case-tag">AI Agents</span>
+                <span class="case-tag">GTM</span>
+                <span class="case-tag">Fintech</span>
+            </div>
+            <h3 class="case-title">Six-Agent GTM Workflow — Fintech Workforce Platform</h3>
+            <p class="case-desc">Built a six-agent workflow system grounded in a shared context layer for a financial technology and workforce management platform: 01 Signal → 02 Source → 03 Enrichment → 04 Score → 05 Outreach → 06 Coach.</p>
+            <div class="case-stat">6<span>agents · shared context layer</span></div>
+        </a>
+
         <!-- CASE 1: LandVault -->
         <div class="case-card" id="case-landvault">
             <div class="case-video-wide">
@@ -283,7 +300,7 @@
         <!-- CASE 8: AI Video Production — Sustainable Construction -->
         <a class="case-card case-card-link" id="case-ecoconstruction" href="Eco-friendly-construction.html">
             <div class="case-video-wide">
-                <video class="lazy-video" muted loop playsinline preload="none" poster="terra-solida-mockup.svg" aria-label="Sustainable construction AI video preview">
+                <video class="lazy-video" autoplay muted loop playsinline preload="none" poster="terra-solida-mockup.svg" aria-label="Sustainable construction AI video preview">
                     <source data-src="https://raw.githubusercontent.com/alexnomads/alexnomads-online-curriculum/main/terrasolida.mp4" type="video/mp4">
                 </video>
             </div>
@@ -297,22 +314,6 @@
             <div class="case-stat">Colosseo<span>AI Video Content Production · production moodboard</span></div>
         </a>
 
-        <!-- CASE 9: Six-Agent GTM Workflow — Fintech Workforce -->
-        <a class="case-card case-card-link" id="case-fintech" href="fintech-agent.html">
-            <div class="case-video-wide">
-                <video class="lazy-video" muted loop playsinline preload="none" poster="papaya-mockup.svg" aria-label="Six-agent GTM workflow console preview">
-                    <source data-src="https://raw.githubusercontent.com/alexnomads/alexnomads-online-curriculum/main/gtm-agent-ai-fintech.mov">
-                </video>
-            </div>
-            <div class="case-meta">
-                <span class="case-tag">AI Agents</span>
-                <span class="case-tag">GTM</span>
-                <span class="case-tag">Fintech</span>
-            </div>
-            <h3 class="case-title">Six-Agent GTM Workflow — Fintech Workforce Platform</h3>
-            <p class="case-desc">Built a six-agent workflow system grounded in a shared context layer for a financial technology and workforce management platform: 01 Signal → 02 Source → 03 Enrichment → 04 Score → 05 Outreach → 06 Coach.</p>
-            <div class="case-stat">6<span>agents · shared context layer</span></div>
-        </a>
     </div>
 </section>
 
@@ -396,9 +397,10 @@
         var video = entry.target;
         var source = video.querySelector('source[data-src]');
         if (source && !source.src) {
+          var tryPlay = function () { video.play().catch(function () {}); };
+          video.addEventListener('loadeddata', tryPlay, { once: true });
           source.src = source.dataset.src;
           video.load();
-          video.play().catch(function () {});
         }
         obs.unobserve(video);
       });
